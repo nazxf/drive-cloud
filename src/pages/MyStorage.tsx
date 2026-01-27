@@ -1,16 +1,17 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useOutletContext } from 'react-router-dom'
 import { Filter, Grid, List as ListIcon, FolderPlus } from 'lucide-react'
 import FileCard, { FileItem } from '../components/FileCard'
 import FolderCard from '../components/FolderCard'
 import FilePreviewModal from '../components/FilePreviewModal'
+import { Skeleton } from '../components/ui/skeleton'
 import { mockFolders } from '../services/mockData'
 
 interface DashboardContext {
     searchQuery: string
 }
 
-// Mock file data (moved outside component to prevent recreation, though filtering will happen inside)
+// Mock file data definition...
 const allMockFiles: FileItem[] = [
     { id: 1, name: 'Toba Lake Proposal 2023.doc', size: '8.45 MB', type: 'doc', modified: '23 Mar 2023' },
     { id: 2, name: 'Project Screenshots.zip', size: '156 MB', type: 'zip', modified: '24 Mar 2023' },
@@ -28,6 +29,15 @@ const MyStorage = () => {
     const { searchQuery } = useOutletContext<DashboardContext>()
     const [viewMode, setViewMode] = useState<'grid' | 'list'>('list')
     const [previewFile, setPreviewFile] = useState<FileItem | null>(null)
+    const [isLoading, setIsLoading] = useState(true)
+
+    // Simulate loading
+    useEffect(() => {
+        const timer = setTimeout(() => {
+            setIsLoading(false)
+        }, 2000)
+        return () => clearTimeout(timer)
+    }, [])
 
     // Filter data based on search query
     const filteredFolders = mockFolders.filter(folder =>
@@ -42,15 +52,58 @@ const MyStorage = () => {
         setPreviewFile(file)
     }
 
+    const FolderSkeleton = () => (
+        <div className="flex items-center gap-3 p-4 rounded-2xl bg-white/[0.02] border border-white/5">
+            <Skeleton className="w-10 h-10 rounded-lg bg-blue-500/20" />
+            <div className="flex-1">
+                <Skeleton className="h-4 w-24 mb-2 bg-white/10" />
+                <Skeleton className="h-3 w-16 bg-white/5" />
+            </div>
+        </div>
+    )
+
+    const FileCardSkeleton = () => {
+        if (viewMode === 'list') {
+            return (
+                <div className="flex items-center gap-4 px-4 py-3 rounded-xl border border-white/5 bg-white/[0.02]">
+                    <Skeleton className="w-10 h-10 rounded-lg lg" />
+                    <div className="flex-1">
+                        <Skeleton className="h-4 w-32 mb-1" />
+                        <Skeleton className="h-3 w-12" />
+                    </div>
+                    <Skeleton className="h-3 w-24 hidden md:block" />
+                    <Skeleton className="w-8 h-8 rounded-lg" />
+                </div>
+            )
+        }
+        return (
+            <div className="rounded-2xl p-5 bg-white/[0.02] border border-white/5">
+                <div className="flex justify-between items-start mb-4">
+                    <Skeleton className="w-14 h-14 rounded-xl" />
+                    <Skeleton className="w-6 h-6 rounded-lg" />
+                </div>
+                <Skeleton className="h-4 w-3/4 mb-3" />
+                <div className="flex justify-between items-end">
+                    <Skeleton className="h-3 w-12" />
+                    <Skeleton className="h-3 w-8" />
+                </div>
+            </div>
+        )
+    }
+
     return (
         <div className="flex-1 overflow-y-auto p-6 md:px-8 md:py-6 custom-scrollbar pb-24">
             {/* Header */}
             <div className="flex items-center justify-between mb-6">
                 <div>
                     <h2 className="text-xl font-semibold text-white">My Storage</h2>
-                    <p className="text-sm text-slate-500 mt-1">
-                        {filteredFolders.length} folders, {filteredFiles.length} files
-                    </p>
+                    {isLoading ? (
+                        <Skeleton className="h-4 w-48 mt-1" />
+                    ) : (
+                        <p className="text-sm text-slate-500 mt-1">
+                            {filteredFolders.length} folders, {filteredFiles.length} files
+                        </p>
+                    )}
                 </div>
                 <div className="flex items-center gap-2">
                     <button
@@ -84,7 +137,19 @@ const MyStorage = () => {
             </div>
 
             {/* Folders Section */}
-            {filteredFolders.length > 0 && (
+            {isLoading ? (
+                <div className="mb-8">
+                    <Skeleton className="h-5 w-24 mb-4" />
+                    <div className={viewMode === 'grid'
+                        ? 'grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4'
+                        : 'space-y-2'
+                    }>
+                        {[1, 2, 3, 4].map((i) => (
+                            <FolderSkeleton key={i} />
+                        ))}
+                    </div>
+                </div>
+            ) : filteredFolders.length > 0 && (
                 <div className="mb-8">
                     <h3 className="text-sm font-medium text-slate-400 mb-4">Folders</h3>
                     <div className={viewMode === 'grid'
@@ -100,25 +165,41 @@ const MyStorage = () => {
 
             {/* Files Section */}
             <div>
-                <h3 className="text-sm font-medium text-slate-400 mb-4">Files</h3>
-                <div className={viewMode === 'grid'
-                    ? 'grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4'
-                    : 'space-y-2'
-                }>
-                    {filteredFiles.map((file) => (
-                        <FileCard
-                            key={file.id}
-                            file={file}
-                            viewMode={viewMode}
-                            onSelect={() => handleFileClick(file)}
-                        />
-                    ))}
-                    {filteredFiles.length === 0 && (
-                        <div className="col-span-full py-12 text-center text-slate-500">
-                            <p>No files found matching "{searchQuery}"</p>
+                {isLoading ? (
+                    <>
+                        <Skeleton className="h-5 w-24 mb-4" />
+                        <div className={viewMode === 'grid'
+                            ? 'grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4'
+                            : 'space-y-2'
+                        }>
+                            {[1, 2, 3, 4, 5, 6, 7, 8].map((i) => (
+                                <FileCardSkeleton key={i} />
+                            ))}
                         </div>
-                    )}
-                </div>
+                    </>
+                ) : (
+                    <>
+                        <h3 className="text-sm font-medium text-slate-400 mb-4">Files</h3>
+                        <div className={viewMode === 'grid'
+                            ? 'grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4'
+                            : 'space-y-2'
+                        }>
+                            {filteredFiles.map((file) => (
+                                <FileCard
+                                    key={file.id}
+                                    file={file}
+                                    viewMode={viewMode}
+                                    onSelect={() => handleFileClick(file)}
+                                />
+                            ))}
+                            {filteredFiles.length === 0 && (
+                                <div className="col-span-full py-12 text-center text-slate-500">
+                                    <p>No files found matching "{searchQuery}"</p>
+                                </div>
+                            )}
+                        </div>
+                    </>
+                )}
             </div>
 
             {/* File Preview Modal */}

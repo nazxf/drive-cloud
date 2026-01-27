@@ -9,7 +9,6 @@ import Recents from './pages/Recents'
 import Favorites from './pages/Favorites'
 import Trash from './pages/Trash'
 import TeamStorage from './pages/TeamStorage'
-
 import Docs from './pages/Docs'
 import DocsRoot from './pages/docs/DocsRoot'
 import Introduction from './pages/docs/Introduction'
