@@ -2,6 +2,7 @@ import { motion } from 'framer-motion'
 import CodeBlock from '../../components/docs/CodeBlock'
 import DocsBreadcrumbs from '../../components/docs/DocsBreadcrumbs'
 import DocsPager from '../../components/docs/DocsPager'
+import DocsHeading from '../../components/docs/DocsHeading'
 
 const ApiReference = () => {
     return (
@@ -18,7 +19,7 @@ const ApiReference = () => {
                 Complete REST API documentation for TeraCloud services.
             </p>
 
-            <h2 id="authentication" className="text-white mb-4">API Key Authentication</h2>
+            <DocsHeading id="authentication" className="text-white mb-4">API Key Authentication</DocsHeading>
             <p className="text-zinc-400 mb-4">All API requests require authentication using an API key:</p>
 
             <div className="not-prose mb-10">
@@ -31,7 +32,7 @@ const ApiReference = () => {
                 />
             </div>
 
-            <h2 id="upload" className="text-white mb-4">Upload Endpoint</h2>
+            <DocsHeading id="upload" className="text-white mb-4">Upload Endpoint</DocsHeading>
             <div className="not-prose mb-4">
                 <code className="text-sm text-white bg-white/10 px-3 py-1.5 rounded font-mono">POST /v1/upload</code>
             </div>
@@ -54,7 +55,7 @@ const ApiReference = () => {
                 />
             </div>
 
-            <h2 id="download" className="text-white mb-4">Download Endpoint</h2>
+            <DocsHeading id="download" className="text-white mb-4">Download Endpoint</DocsHeading>
             <div className="not-prose mb-4">
                 <code className="text-sm text-white bg-white/10 px-3 py-1.5 rounded font-mono">GET /v1/files/:id</code>
             </div>

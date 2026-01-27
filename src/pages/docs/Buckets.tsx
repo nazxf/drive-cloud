@@ -2,6 +2,7 @@ import { Database, Shield, Settings, Globe } from 'lucide-react'
 import { motion } from 'framer-motion'
 import DocsBreadcrumbs from '../../components/docs/DocsBreadcrumbs'
 import DocsPager from '../../components/docs/DocsPager'
+import DocsHeading from '../../components/docs/DocsHeading'
 
 const Buckets = () => {
     return (
@@ -19,7 +20,7 @@ const Buckets = () => {
                 Each bucket can have its own access policies and configuration.
             </p>
 
-            <h2 id="creating" className="text-white mb-4">Creating Buckets</h2>
+            <DocsHeading id="creating" className="text-white mb-4">Creating Buckets</DocsHeading>
             <p className="text-zinc-400 mb-6">
                 Create buckets to separate different projects, environments, or use cases.
             </p>
@@ -41,7 +42,7 @@ const Buckets = () => {
                 </div>
             </div>
 
-            <h2 id="permissions" className="text-white mb-4">Permissions</h2>
+            <DocsHeading id="permissions" className="text-white mb-4">Permissions</DocsHeading>
             <p className="text-zinc-400 mb-6">
                 Control access to your buckets with fine-grained permissions.
             </p>
@@ -58,7 +59,7 @@ const Buckets = () => {
                 </ul>
             </div>
 
-            <h2 id="lifecycle" className="text-white mb-4">Lifecycle Rules</h2>
+            <DocsHeading id="lifecycle" className="text-white mb-4">Lifecycle Rules</DocsHeading>
             <p className="text-zinc-400 mb-6">
                 Automate file management with lifecycle rules.
             </p>

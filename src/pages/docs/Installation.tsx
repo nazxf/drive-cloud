@@ -2,6 +2,7 @@ import { motion } from 'framer-motion'
 import CodeBlock from '../../components/docs/CodeBlock'
 import DocsBreadcrumbs from '../../components/docs/DocsBreadcrumbs'
 import DocsPager from '../../components/docs/DocsPager'
+import DocsHeading from '../../components/docs/DocsHeading'
 
 const Installation = () => {
     return (
@@ -19,7 +20,7 @@ const Installation = () => {
                     This guide will help you install and configure the TeraCloud SDK in your project.
                 </p>
 
-                <h2 className="text-white mt-10 mb-4">Requirements</h2>
+                <DocsHeading className="text-white mt-10 mb-4">Requirements</DocsHeading>
                 <ul className="list-disc pl-6 space-y-3 text-zinc-400 mb-8">
                     <li>Node.js 18.0 or higher</li>
                     <li>npm, pnpm, yarn, or bun</li>
@@ -28,7 +29,7 @@ const Installation = () => {
             </section>
 
             <section id="package-managers" className="mb-12">
-                <h2 className="text-white mb-4">Package Managers</h2>
+                <DocsHeading className="text-white mb-4">Package Managers</DocsHeading>
                 <p className="text-zinc-400 mb-6">Install the SDK using your preferred package manager:</p>
 
                 <div className="not-prose">
@@ -45,12 +46,12 @@ const Installation = () => {
             </section>
 
             <section id="configuration" className="mb-12">
-                <h2 className="text-white mb-4">Configuration</h2>
+                <DocsHeading className="text-white mb-4">Configuration</DocsHeading>
                 <p className="text-zinc-400 mb-6">
                     After installation, configure the SDK with your API credentials.
                 </p>
 
-                <h3 className="text-white text-lg mb-4">Environment Variables</h3>
+                <DocsHeading level={3} className="text-white text-lg mb-4">Environment Variables</DocsHeading>
                 <p className="text-zinc-400 mb-4">Create a <code>.env</code> file in your project root:</p>
 
                 <div className="not-prose mb-8">
@@ -64,7 +65,7 @@ TERACLOUD_BUCKET=my-bucket`
                     />
                 </div>
 
-                <h3 className="text-white text-lg mb-4">SDK Initialization</h3>
+                <DocsHeading level={3} className="text-white text-lg mb-4">SDK Initialization</DocsHeading>
                 <p className="text-zinc-400 mb-4">Initialize the SDK in your application:</p>
 
                 <div className="not-prose">

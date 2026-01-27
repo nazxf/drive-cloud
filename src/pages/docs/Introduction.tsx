@@ -2,6 +2,7 @@ import { Zap, Code, Shield, Layers } from 'lucide-react'
 import { motion } from 'framer-motion'
 import DocsBreadcrumbs from '../../components/docs/DocsBreadcrumbs'
 import DocsPager from '../../components/docs/DocsPager'
+import DocsHeading from '../../components/docs/DocsHeading'
 
 const Introduction = () => {
     return (
@@ -19,7 +20,7 @@ const Introduction = () => {
                 Manage files programmatically, share assets securely, and collaborate in real-time.
             </p>
 
-            <h2 className="text-white mb-4">Features</h2>
+            <DocsHeading>Features</DocsHeading>
             <div className="grid sm:grid-cols-2 gap-4 not-prose mb-10">
                 <FeatureCard icon={Zap} title="Lightning Fast" desc="Global CDN distribution and smart caching for sub-second delivery." />
                 <FeatureCard icon={Code} title="Developer First" desc="Type-safe SDKs and comprehensive REST API for instant integration." />

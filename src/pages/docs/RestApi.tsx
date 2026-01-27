@@ -3,6 +3,7 @@ import { motion } from 'framer-motion'
 import CodeBlock from '../../components/docs/CodeBlock'
 import DocsBreadcrumbs from '../../components/docs/DocsBreadcrumbs'
 import DocsPager from '../../components/docs/DocsPager'
+import DocsHeading from '../../components/docs/DocsHeading'
 
 const RestApi = () => {
     return (
@@ -20,7 +21,7 @@ const RestApi = () => {
                 All endpoints return JSON responses and follow REST conventions.
             </p>
 
-            <h2 id="base-url" className="text-white mb-4">Base URL</h2>
+            <DocsHeading id="base-url" className="text-white mb-4">Base URL</DocsHeading>
             <p className="text-zinc-400 mb-4">
                 All API requests should be made to:
             </p>
@@ -32,7 +33,7 @@ const RestApi = () => {
                 </div>
             </div>
 
-            <h2 id="rate-limits" className="text-white mb-4">Rate Limits</h2>
+            <DocsHeading id="rate-limits" className="text-white mb-4">Rate Limits</DocsHeading>
             <p className="text-zinc-400 mb-6">
                 API requests are rate limited to ensure fair usage and platform stability.
             </p>
@@ -62,7 +63,7 @@ X-RateLimit-Reset: 1706345678`
                 />
             </div>
 
-            <h2 id="errors" className="text-white mb-4">Error Codes</h2>
+            <DocsHeading id="errors" className="text-white mb-4">Error Codes</DocsHeading>
             <p className="text-zinc-400 mb-6">
                 The API uses standard HTTP status codes to indicate success or failure.
             </p>

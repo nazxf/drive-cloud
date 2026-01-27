@@ -2,6 +2,7 @@ import { Folder, HardDrive, RefreshCw } from 'lucide-react'
 import { motion } from 'framer-motion'
 import DocsBreadcrumbs from '../../components/docs/DocsBreadcrumbs'
 import DocsPager from '../../components/docs/DocsPager'
+import DocsHeading from '../../components/docs/DocsHeading'
 
 const Files = () => {
     return (
@@ -19,7 +20,7 @@ const Files = () => {
                 while offering cloud-native features like versioning and metadata.
             </p>
 
-            <h2 id="structure" className="text-white mb-4">File Structure</h2>
+            <DocsHeading id="structure" className="text-white mb-4">File Structure</DocsHeading>
             <p className="text-zinc-400 mb-6">
                 Files are organized in a hierarchical structure similar to your local file system.
                 Each file has a unique path and can be nested within folders.
@@ -42,7 +43,7 @@ const Files = () => {
                 </div>
             </div>
 
-            <h2 id="metadata" className="text-white mb-4">Metadata</h2>
+            <DocsHeading id="metadata" className="text-white mb-4">Metadata</DocsHeading>
             <p className="text-zinc-400 mb-4">
                 Every file can have custom metadata attached for easier organization and search.
             </p>
@@ -53,7 +54,7 @@ const Files = () => {
                 <li>Creation and modification timestamps</li>
             </ul>
 
-            <h2 id="versioning" className="text-white mb-4">Versioning</h2>
+            <DocsHeading id="versioning" className="text-white mb-4">Versioning</DocsHeading>
             <p className="text-zinc-400 mb-6">
                 Enable versioning to keep track of all changes to your files. Restore previous
                 versions at any time or compare changes between versions.

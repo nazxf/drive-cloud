@@ -2,6 +2,7 @@ import { Server, Database, Cloud } from 'lucide-react'
 import { motion } from 'framer-motion'
 import DocsBreadcrumbs from '../../components/docs/DocsBreadcrumbs'
 import DocsPager from '../../components/docs/DocsPager'
+import DocsHeading from '../../components/docs/DocsHeading'
 
 const Architecture = () => {
     return (
@@ -18,7 +19,7 @@ const Architecture = () => {
                 TeraCloud is built on a distributed architecture designed for maximum reliability and performance.
             </p>
 
-            <h2 id="overview" className="text-white mb-4">Overview</h2>
+            <DocsHeading id="overview" className="text-white mb-4">Overview</DocsHeading>
             <p className="text-zinc-400 mb-6">
                 Our infrastructure spans multiple regions worldwide, ensuring low latency and high availability for users everywhere.
             </p>

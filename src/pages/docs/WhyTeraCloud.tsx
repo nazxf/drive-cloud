@@ -1,6 +1,7 @@
 import { motion } from 'framer-motion'
 import DocsBreadcrumbs from '../../components/docs/DocsBreadcrumbs'
 import DocsPager from '../../components/docs/DocsPager'
+import DocsHeading from '../../components/docs/DocsHeading'
 
 const WhyTeraCloud = () => {
     return (
@@ -18,7 +19,7 @@ const WhyTeraCloud = () => {
                 of local file management to the cloud, powered by a robust backend and a beautiful, minimal interface.
             </p>
 
-            <h2 className="text-white mb-4">Key Benefits</h2>
+            <DocsHeading>Key Benefits</DocsHeading>
             <ul className="list-disc pl-6 space-y-3 text-zinc-400 mb-8">
                 <li>End-to-end encryption for maximum security</li>
                 <li>Real-time collaboration and file syncing</li>

@@ -2,6 +2,7 @@ import { motion } from 'framer-motion'
 import CodeBlock from '../../components/docs/CodeBlock'
 import DocsBreadcrumbs from '../../components/docs/DocsBreadcrumbs'
 import DocsPager from '../../components/docs/DocsPager'
+import DocsHeading from '../../components/docs/DocsHeading'
 
 const QuickStart = () => {
     return (
@@ -18,7 +19,7 @@ const QuickStart = () => {
                 Get up and running with TeraCloud integration in under 5 minutes.
             </p>
 
-            <h2 className="text-white mb-4" id="installation">1. Installation</h2>
+            <DocsHeading id="installation" className="text-white mb-4">1. Installation</DocsHeading>
             <p className="text-zinc-400 mb-4">Install the official SDK via your preferred package manager:</p>
 
             <div className="not-prose mb-10">
@@ -33,7 +34,7 @@ const QuickStart = () => {
                 />
             </div>
 
-            <h2 className="text-white mb-4" id="initialize">2. Initialize Client</h2>
+            <DocsHeading id="initialize" className="text-white mb-4">2. Initialize Client</DocsHeading>
             <p className="text-zinc-400 mb-4">Create a new TeraCloud client instance:</p>
 
             <div className="not-prose mb-10">
@@ -57,7 +58,7 @@ const cloud = new TeraCloud({
                 />
             </div>
 
-            <h2 className="text-white mb-4" id="first-upload">3. First Upload</h2>
+            <DocsHeading id="first-upload" className="text-white mb-4">3. First Upload</DocsHeading>
             <p className="text-zinc-400 mb-4">Upload your first file to TeraCloud:</p>
 
             <div className="not-prose mb-10">

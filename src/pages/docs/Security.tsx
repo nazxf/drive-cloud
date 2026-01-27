@@ -2,6 +2,7 @@ import { Lock, Shield, Key, FileCheck, Book } from 'lucide-react'
 import { motion } from 'framer-motion'
 import DocsBreadcrumbs from '../../components/docs/DocsBreadcrumbs'
 import DocsPager from '../../components/docs/DocsPager'
+import DocsHeading from '../../components/docs/DocsHeading'
 
 const Security = () => {
     return (
@@ -18,7 +19,7 @@ const Security = () => {
                 TeraCloud implements industry-leading security practices to keep your data safe.
             </p>
 
-            <h2 id="encryption" className="text-white mb-4">Encryption</h2>
+            <DocsHeading id="encryption" className="text-white mb-4">Encryption</DocsHeading>
             <p className="text-zinc-400 mb-6">
                 All data is protected with enterprise-grade encryption at every layer.
             </p>
@@ -49,7 +50,7 @@ const Security = () => {
                 </div>
             </div>
 
-            <h2 id="access-control" className="text-white mb-4">Access Control</h2>
+            <DocsHeading id="access-control" className="text-white mb-4">Access Control</DocsHeading>
             <p className="text-zinc-400 mb-6">
                 Fine-grained permissions and comprehensive audit logging.
             </p>
@@ -79,7 +80,7 @@ const Security = () => {
                 </div>
             </div>
 
-            <h2 id="compliance" className="text-white mb-4">Compliance</h2>
+            <DocsHeading id="compliance" className="text-white mb-4">Compliance</DocsHeading>
             <p className="text-zinc-400 mb-4">TeraCloud meets the following compliance standards:</p>
             <ul className="list-disc pl-6 space-y-3 text-zinc-400 mb-10">
                 <li>SOC 2 Type II certified</li>

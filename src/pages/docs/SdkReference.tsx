@@ -1,6 +1,7 @@
 import { motion } from 'framer-motion'
 import { Box, Code2, Settings, Download, Upload, Trash2, List } from 'lucide-react'
 import CodeBlock from '../../components/docs/CodeBlock'
+import DocsHeading from '../../components/docs/DocsHeading'
 import DocsBreadcrumbs from '../../components/docs/DocsBreadcrumbs'
 import DocsPager from '../../components/docs/DocsPager'
 
@@ -26,10 +27,10 @@ const SdkReference = () => {
                 </p>
             </div>
 
-            <h2 id="initialization" className="text-white mb-4 flex items-center gap-2">
+            <DocsHeading id="initialization" className="text-white mb-4 flex items-center gap-2">
                 <Settings className="w-5 h-5" />
                 Initialization
-            </h2>
+            </DocsHeading>
             <p className="text-zinc-400 mb-6">
                 Initialize the client with your API key. You can find your keys in the dashboard.
             </p>
@@ -51,10 +52,10 @@ const cloud = new TeraCloud({
                 />
             </div>
 
-            <h2 id="upload" className="text-white mb-4 flex items-center gap-2">
+            <DocsHeading id="upload" className="text-white mb-4 flex items-center gap-2">
                 <Upload className="w-5 h-5" />
                 Upload File
-            </h2>
+            </DocsHeading>
             <p className="text-zinc-400 mb-4">
                 Upload a file from a buffer, stream, or file path.
             </p>
@@ -82,10 +83,10 @@ const { url } = await cloud.upload({
                 />
             </div>
 
-            <h2 id="download" className="text-white mb-4 flex items-center gap-2">
+            <DocsHeading id="download" className="text-white mb-4 flex items-center gap-2">
                 <Download className="w-5 h-5" />
                 Download File
-            </h2>
+            </DocsHeading>
             <p className="text-zinc-400 mb-4">
                 Get a signed URL or download the file content directly.
             </p>
@@ -105,10 +106,10 @@ fs.writeFileSync('downloaded.pdf', buffer)`
                 />
             </div>
 
-            <h2 id="list" className="text-white mb-4 flex items-center gap-2">
+            <DocsHeading id="list" className="text-white mb-4 flex items-center gap-2">
                 <List className="w-5 h-5" />
                 List Files
-            </h2>
+            </DocsHeading>
             <p className="text-zinc-400 mb-4">
                 List files in a specific folder with pagination support.
             </p>
@@ -129,10 +130,10 @@ console.log(files.data) // Array of FileObject`
                 />
             </div>
 
-            <h2 id="delete" className="text-white mb-4 flex items-center gap-2">
+            <DocsHeading id="delete" className="text-white mb-4 flex items-center gap-2">
                 <Trash2 className="w-5 h-5" />
                 Delete File
-            </h2>
+            </DocsHeading>
             <p className="text-zinc-400 mb-4">
                 Permanently remove a file from storage.
             </p>
@@ -149,10 +150,10 @@ await cloud.delete(['file_1', 'file_2'])`
                 />
             </div>
 
-            <h2 id="types" className="text-white mb-4 flex items-center gap-2">
+            <DocsHeading id="types" className="text-white mb-4 flex items-center gap-2">
                 <Code2 className="w-5 h-5" />
                 Types
-            </h2>
+            </DocsHeading>
             <p className="text-zinc-400 mb-6">
                 Common TypeScript interfaces used in the SDK.
             </p>
