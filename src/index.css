@@ -5,7 +5,7 @@
 @tailwind utilities;
 
 :root {
-  font-family: "DM Sans", sans-serif;
+  font-family: 'Inter', sans-serif;
   line-height: 1.5;
   font-weight: 400;
   color-scheme: dark;
@@ -13,22 +13,13 @@
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-}
 
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
-
-body {
-  min-height: 100vh;
-  background-color: #020617;
-  color: #f8fafc;
-}
-
-#root {
-  min-height: 100vh;
+  /* Linear-style Pro Dark Theme */
+  --bg-deep: #050505;       /* Almost Black */
+  --bg-card: #0A0A0A;       /* Deep Grey Surface */
+  --accent-primary: #EDEDED; /* White Text/Accent */
+  --accent-secondary: #262626; /* Dark Border/Element */
+  --accent-glow: rgba(255, 255, 255, 0.05); /* Subtle White Glow */
 }
 
 /* Scrollbar Styling */
@@ -38,29 +29,52 @@ body {
 }
 
 ::-webkit-scrollbar-track {
-  background: #1e293b;
+  background: var(--bg-deep);
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #475569;
+  background: #262626;
   border-radius: 4px;
+  border: 2px solid var(--bg-deep);
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #64748b;
+  background: #404040;
 }
 
 /* Custom Utilities */
 @layer utilities {
   .glass {
-    background: rgba(30, 41, 59, 0.5);
-    backdrop-filter: blur(12px);
-    border: 1px solid rgba(100, 116, 139, 0.2);
+    background: #0A0A0A;
+    border: 1px solid rgba(255, 255, 255, 0.08);
   }
 
-  .glass-light {
-    background: rgba(30, 41, 59, 0.3);
-    backdrop-filter: blur(8px);
-    border: 1px solid rgba(100, 116, 139, 0.1);
+  .glass-hover {
+    background: #121212;
+    border-color: rgba(255, 255, 255, 0.15);
+    transition: all 0.2s ease;
   }
+
+  .glass-header {
+    background: rgba(10, 10, 15, 0.8);
+    backdrop-filter: blur(16px);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  }
+
+  .text-gradient {
+    background: linear-gradient(135deg, #fff 0%, #94a3b8 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+}
+
+/* Animations */
+@keyframes glow-pulse {
+  0% { box-shadow: 0 0 5px var(--accent-glow); }
+  50% { box-shadow: 0 0 20px rgba(99, 102, 241, 0.3); }
+  100% { box-shadow: 0 0 5px var(--accent-glow); }
+}
+
+.animate-glow {
+  animation: glow-pulse 3s infinite;
 }
