@@ -15,6 +15,7 @@ import Files from './pages/docs/Files'
 import Buckets from './pages/docs/Buckets'
 import ApiReference from './pages/docs/ApiReference'
 import RestApi from './pages/docs/RestApi'
+import SdkReference from './pages/docs/SdkReference'
 import Security from './pages/docs/Security'
 
 function App() {
@@ -36,6 +37,7 @@ function App() {
                 <Route path="buckets" element={<Buckets />} />
                 <Route path="api-reference" element={<ApiReference />} />
                 <Route path="rest-api" element={<RestApi />} />
+                <Route path="sdk" element={<SdkReference />} />
                 <Route path="security" element={<Security />} />
             </Route>
         </Routes>
