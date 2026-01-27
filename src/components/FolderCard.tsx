@@ -1,6 +1,7 @@
 import { motion } from 'framer-motion'
 import { FolderItem } from '../store/useStore'
-import { Folder, MoreVertical } from 'lucide-react'
+import { Folder, MoreVertical, Edit2, Share2, Trash2 } from 'lucide-react'
+import { DropdownMenu, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator } from './ui/dropdown-menu'
 
 interface FolderCardProps {
     folder: FolderItem
@@ -33,9 +34,31 @@ const FolderCard = ({ folder, viewMode }: FolderCardProps) => {
                 <div className="text-slate-600 text-xs hidden lg:block w-28">
                     {formattedDate}
                 </div>
-                <button className="text-slate-600 hover:text-white opacity-0 group-hover:opacity-100 transition-all p-1 hover:bg-white/10 rounded">
-                    <MoreVertical className="w-4 h-4" />
-                </button>
+                <div onClick={(e) => e.stopPropagation()}>
+                    <DropdownMenu
+                        trigger={
+                            <button className="text-slate-600 hover:text-white opacity-0 group-hover:opacity-100 transition-all p-1 hover:bg-white/10 rounded">
+                                <MoreVertical className="w-4 h-4" />
+                            </button>
+                        }
+                    >
+                        <DropdownMenuLabel>Folder Actions</DropdownMenuLabel>
+                        <DropdownMenuSeparator />
+                        <DropdownMenuItem>
+                            <Edit2 className="w-4 h-4 mr-2" />
+                            Rename
+                        </DropdownMenuItem>
+                        <DropdownMenuItem>
+                            <Share2 className="w-4 h-4 mr-2" />
+                            Share
+                        </DropdownMenuItem>
+                        <DropdownMenuSeparator />
+                        <DropdownMenuItem className="text-red-400 hover:!text-red-400 hover:!bg-red-500/10">
+                            <Trash2 className="w-4 h-4 mr-2" />
+                            Delete
+                        </DropdownMenuItem>
+                    </DropdownMenu>
+                </div>
             </motion.div>
         )
     }
@@ -57,9 +80,31 @@ const FolderCard = ({ folder, viewMode }: FolderCardProps) => {
                     <div className="w-12 h-12 rounded-xl bg-[var(--accent-primary)]/10 border border-white/5 flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
                         <Folder className="w-6 h-6 text-[var(--accent-primary)]" fill="currentColor" />
                     </div>
-                    <button className="text-slate-500 hover:text-white opacity-0 group-hover:opacity-100 transition-all p-1.5 hover:bg-white/10 rounded-lg">
-                        <MoreVertical className="w-4 h-4" />
-                    </button>
+                    <div onClick={(e) => e.stopPropagation()}>
+                        <DropdownMenu
+                            trigger={
+                                <button className="text-slate-500 hover:text-white opacity-0 group-hover:opacity-100 transition-all p-1.5 hover:bg-white/10 rounded-lg data-[state=open]:opacity-100">
+                                    <MoreVertical className="w-4 h-4" />
+                                </button>
+                            }
+                        >
+                            <DropdownMenuLabel>Folder Actions</DropdownMenuLabel>
+                            <DropdownMenuSeparator />
+                            <DropdownMenuItem>
+                                <Edit2 className="w-4 h-4 mr-2" />
+                                Rename
+                            </DropdownMenuItem>
+                            <DropdownMenuItem>
+                                <Share2 className="w-4 h-4 mr-2" />
+                                Share
+                            </DropdownMenuItem>
+                            <DropdownMenuSeparator />
+                            <DropdownMenuItem className="text-red-400 hover:!text-red-400 hover:!bg-red-500/10">
+                                <Trash2 className="w-4 h-4 mr-2" />
+                                Delete
+                            </DropdownMenuItem>
+                        </DropdownMenu>
+                    </div>
                 </div>
 
                 <h3 className="text-base font-medium text-slate-200 group-hover:text-white mb-1 truncate transition-colors">

@@ -1,24 +1,30 @@
 import { useState } from 'react'
 import { Search, Upload, Bell, Settings, HelpCircle } from 'lucide-react'
+import { Outlet, useLocation } from 'react-router-dom'
 import DashboardLayout from '../layouts/DashboardLayout'
-import FolderCard from '../components/FolderCard'
-import { mockFolders } from '../services/mockData'
 import UploadModal from '../components/UploadModal'
-import OverviewCards from '../components/OverviewCards'
-import RecentFilesTable from '../components/RecentFilesTable'
 
 const Dashboard = () => {
+    const location = useLocation()
     const [searchQuery, setSearchQuery] = useState('')
     const [showUploadModal, setShowUploadModal] = useState(false)
 
-    const filteredFolders = mockFolders.filter(folder =>
-        folder.name.toLowerCase().includes(searchQuery.toLowerCase())
-    )
+    // Dynamic Title based on route
+    const getPageTitle = () => {
+        const path = location.pathname
+        if (path === '/dashboard') return 'Overview Storage'
+        if (path.startsWith('/storage')) return 'My Storage'
+        if (path.startsWith('/recent')) return 'Recents'
+        if (path.startsWith('/favorites')) return 'Favorites'
+        if (path.startsWith('/trash')) return 'Trash'
+        if (path.startsWith('/shared')) return 'Shared'
+        if (path.startsWith('/team')) return 'Team Storage'
+        return 'Dashboard'
+    }
 
     return (
         <DashboardLayout>
             <div className="relative flex-1 min-h-screen font-sans bg-[var(--bg-deep)] overflow-hidden">
-
                 {/* Content Container */}
                 <div className="relative z-10 flex flex-col h-full">
 
@@ -65,7 +71,7 @@ const Dashboard = () => {
 
                         {/* Sub Header / Actions Row */}
                         <div className="flex items-center justify-between mt-6">
-                            <h2 className="text-sm font-semibold text-slate-300">Overview Storage</h2>
+                            <h2 className="text-sm font-semibold text-slate-300">{getPageTitle()}</h2>
                             <div className="flex items-center gap-3">
                                 <button className="flex items-center gap-2 px-3 py-1.5 text-xs font-medium text-slate-400 hover:text-white rounded-lg border border-white/5 hover:bg-white/5 transition-colors">
                                     Sort
@@ -84,35 +90,11 @@ const Dashboard = () => {
                         </div>
                     </div>
 
-
-                    {/* Content Scroll Area */}
-                    <div className="flex-1 overflow-y-auto p-6 md:px-8 md:py-6 custom-scrollbar">
-
-                        {/* 1. Overview Cards */}
-                        <OverviewCards />
-
-                        {/* 2. Suggested / Folders */}
-                        <div className="mb-8">
-                            <div className="flex items-center justify-between mb-4">
-                                <h3 className="text-white font-medium text-lg">Suggested</h3>
-                            </div>
-                            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-                                {filteredFolders.map((folder) => (
-                                    <FolderCard key={folder.id} folder={folder} viewMode="grid" />
-                                ))}
-                                {filteredFolders.length === 0 && (
-                                    <div className="col-span-full py-8 text-center text-slate-500 text-sm">
-                                        No folders found
-                                    </div>
-                                )}
-                            </div>
-                        </div>
-
-                        {/* 3. Recent Files Table */}
-                        <div className="pb-10">
-                            <RecentFilesTable />
-                        </div>
+                    {/* Main Outlet for Sub-pages */}
+                    <div className="flex-1 overflow-hidden flex flex-col">
+                        <Outlet context={{ searchQuery }} />
                     </div>
+
                 </div>
             </div>
 

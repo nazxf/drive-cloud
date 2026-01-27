@@ -3,6 +3,12 @@ import Landing from './pages/Landing'
 import Login from './pages/Login'
 import Register from './pages/Register'
 import Dashboard from './pages/Dashboard'
+import Overview from './pages/Overview'
+import MyStorage from './pages/MyStorage'
+import Recents from './pages/Recents'
+import Favorites from './pages/Favorites'
+import Trash from './pages/Trash'
+import TeamStorage from './pages/TeamStorage'
 
 import Docs from './pages/Docs'
 import DocsRoot from './pages/docs/DocsRoot'
@@ -24,7 +30,16 @@ function App() {
             <Route path="/" element={<Landing />} />
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
-            <Route path="/dashboard/*" element={<Dashboard />} />
+            <Route element={<Dashboard />}>
+                <Route path="/dashboard" element={<Overview />} />
+                <Route path="/storage" element={<MyStorage />} />
+                <Route path="/recent" element={<Recents />} />
+                <Route path="/favorites" element={<Favorites />} />
+                <Route path="/trash" element={<Trash />} />
+                <Route path="/team/:teamId" element={<TeamStorage />} />
+                <Route path="/shared-folder" element={<div className="p-8 text-zinc-500">Shared Folder (Coming Soon)</div>} />
+                <Route path="/shared-file" element={<div className="p-8 text-zinc-500">Shared File (Coming Soon)</div>} />
+            </Route>
 
             <Route path="/docs" element={<Docs />}>
                 <Route index element={<DocsRoot />} />

@@ -36,10 +36,10 @@ const Sidebar = () => {
                 <div className="space-y-1">
                     <p className="px-3 text-xs font-semibold text-slate-500 uppercase tracking-wider mb-2">File Manager</p>
                     {[
-                        { icon: HardDrive, label: 'My Storage', path: '/dashboard/storage' },
-                        { icon: Clock, label: 'Recents', path: '/dashboard/recent' },
-                        { icon: Star, label: 'Favorites', path: '/dashboard/favorites' },
-                        { icon: Trash2, label: 'Trash', path: '/dashboard/trash' },
+                        { icon: HardDrive, label: 'My Storage', path: '/storage' },
+                        { icon: Clock, label: 'Recents', path: '/recent' },
+                        { icon: Star, label: 'Favorites', path: '/favorites' },
+                        { icon: Trash2, label: 'Trash', path: '/trash' },
                     ].map((item) => (
                         <NavLink
                             key={item.path}
@@ -62,8 +62,8 @@ const Sidebar = () => {
                 <div className="space-y-1">
                     <p className="px-3 text-xs font-semibold text-slate-500 uppercase tracking-wider mb-2">Shared File</p>
                     {[
-                        { icon: FolderOpen, label: 'Shared Folder', path: '/dashboard/shared-folder' },
-                        { icon: FileText, label: 'Shared File', path: '/dashboard/shared-file' },
+                        { icon: FolderOpen, label: 'Shared Folder', path: '/shared-folder' },
+                        { icon: FileText, label: 'Shared File', path: '/shared-file' },
                     ].map((item) => (
                         <NavLink
                             key={item.path}
@@ -86,8 +86,8 @@ const Sidebar = () => {
                 <div className="space-y-1">
                     <p className="px-3 text-xs font-semibold text-slate-500 uppercase tracking-wider mb-2">Team Storage</p>
                     {[
-                        { icon: Users, label: 'Civic Team', path: '/dashboard/team/civic' },
-                        { icon: Users, label: 'Developer Team', path: '/dashboard/team/dev' },
+                        { icon: Users, label: 'Civic Team', path: '/team/civic' },
+                        { icon: Users, label: 'Developer Team', path: '/team/dev' },
                     ].map((item) => (
                         <NavLink
                             key={item.path}
