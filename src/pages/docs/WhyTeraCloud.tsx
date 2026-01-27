@@ -12,17 +12,19 @@ const WhyTeraCloud = () => {
         >
             <DocsBreadcrumbs items={['Getting Started', 'Why TeraCloud']} />
 
-            <h1 className="text-white">Why TeraCloud?</h1>
-            <p>
-                Traditional cloud storage is clunky and disconnected. TeraCloud aims to bring the fluidity of local file management to the cloud,
-                powered by a robust backend and a beautiful, minimal interface.
+            <h1 className="text-white mb-4">Why TeraCloud?</h1>
+            <p className="text-zinc-400 mb-8">
+                Traditional cloud storage is clunky and disconnected. TeraCloud aims to bring the fluidity
+                of local file management to the cloud, powered by a robust backend and a beautiful, minimal interface.
             </p>
-            <ul className="list-disc pl-5 space-y-2 text-zinc-400 mb-8 border-l border-white/10 ml-1 py-1">
-                <li className="pl-2">End-to-end encryption for maximum security</li>
-                <li className="pl-2">Real-time collaboration and file syncing</li>
-                <li className="pl-2">Advanced search with metadata filtering</li>
-                <li className="pl-2">Team management and role-based access control</li>
-                <li className="pl-2">99.99% uptime SLA with global redundancy</li>
+
+            <h2 className="text-white mb-4">Key Benefits</h2>
+            <ul className="list-disc pl-6 space-y-3 text-zinc-400 mb-8">
+                <li>End-to-end encryption for maximum security</li>
+                <li>Real-time collaboration and file syncing</li>
+                <li>Advanced search with metadata filtering</li>
+                <li>Team management and role-based access control</li>
+                <li>99.99% uptime SLA with global redundancy</li>
             </ul>
 
             <DocsPager

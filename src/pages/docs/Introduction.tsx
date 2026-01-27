@@ -13,13 +13,14 @@ const Introduction = () => {
         >
             <DocsBreadcrumbs items={['Getting Started', 'Introduction']} />
 
-            <h1 className="text-white mb-6">Introduction</h1>
-            <p className="lead text-xl text-zinc-300 mb-10">
+            <h1 className="text-white mb-4">Introduction</h1>
+            <p className="text-zinc-400 text-lg mb-10">
                 TeraCloud is a secure, high-performance cloud storage solution designed for developer teams.
                 Manage files programmatically, share assets securely, and collaborate in real-time.
             </p>
 
-            <div className="grid sm:grid-cols-2 gap-4 not-prose mb-16">
+            <h2 className="text-white mb-4">Features</h2>
+            <div className="grid sm:grid-cols-2 gap-4 not-prose mb-10">
                 <FeatureCard icon={Zap} title="Lightning Fast" desc="Global CDN distribution and smart caching for sub-second delivery." />
                 <FeatureCard icon={Code} title="Developer First" desc="Type-safe SDKs and comprehensive REST API for instant integration." />
                 <FeatureCard icon={Shield} title="Secure by Default" desc="AES-256 encryption at rest and TLS 1.3 in transit." />

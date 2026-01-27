@@ -13,47 +13,72 @@ const QuickStart = () => {
         >
             <DocsBreadcrumbs items={['Getting Started', 'Quick Start']} />
 
-            <h1 className="text-white">Quick Start</h1>
-            <p>
+            <h1 className="text-white mb-4">Quick Start</h1>
+            <p className="text-zinc-400 mb-8">
                 Get up and running with TeraCloud integration in under 5 minutes.
             </p>
 
-            <h2 className="text-white" id="installation">1. Installation</h2>
-            <p>Install the official SDK via your preferred package manager:</p>
+            <h2 className="text-white mb-4" id="installation">1. Installation</h2>
+            <p className="text-zinc-400 mb-4">Install the official SDK via your preferred package manager:</p>
 
-            <CodeBlock
-                tabs={['npm', 'pnpm', 'yarn', 'bun']}
-                content={{
-                    npm: 'npm install @teracloud/sdk',
-                    pnpm: 'pnpm add @teracloud/sdk',
-                    yarn: 'yarn add @teracloud/sdk',
-                    bun: 'bun add @teracloud/sdk'
-                }}
-            />
+            <div className="not-prose mb-10">
+                <CodeBlock
+                    tabs={['npm', 'pnpm', 'yarn', 'bun']}
+                    content={{
+                        npm: 'npm install @teracloud/sdk',
+                        pnpm: 'pnpm add @teracloud/sdk',
+                        yarn: 'yarn add @teracloud/sdk',
+                        bun: 'bun add @teracloud/sdk'
+                    }}
+                />
+            </div>
 
-            <h2 className="text-white">2. Initialize Client</h2>
-            <CodeBlock
-                tabs={['Global', 'Per Request']}
-                language="typescript"
-                content={{
-                    'Global': `import { TeraCloud } from '@teracloud/sdk'
+            <h2 className="text-white mb-4" id="initialize">2. Initialize Client</h2>
+            <p className="text-zinc-400 mb-4">Create a new TeraCloud client instance:</p>
+
+            <div className="not-prose mb-10">
+                <CodeBlock
+                    tabs={['Global', 'Per Request']}
+                    language="typescript"
+                    content={{
+                        'Global': `import { TeraCloud } from '@teracloud/sdk'
 
 const cloud = new TeraCloud({
   apiKey: process.env.TERACLOUD_API_KEY,
   region: 'us-east-1'
 })`,
-                    'Per Request': `import { TeraCloud } from '@teracloud/sdk'
+                        'Per Request': `import { TeraCloud } from '@teracloud/sdk'
 
 // Initialize with ephemeral credentials
 const cloud = new TeraCloud({
   token: sessionToken
 })`
-                }}
-            />
+                    }}
+                />
+            </div>
+
+            <h2 className="text-white mb-4" id="first-upload">3. First Upload</h2>
+            <p className="text-zinc-400 mb-4">Upload your first file to TeraCloud:</p>
+
+            <div className="not-prose mb-10">
+                <CodeBlock
+                    tabs={['TypeScript']}
+                    language="typescript"
+                    content={{
+                        'TypeScript': `const file = await cloud.upload({
+  file: buffer,
+  name: 'hello.txt',
+  folder: '/documents'
+})
+
+console.log('Uploaded:', file.url)`
+                    }}
+                />
+            </div>
 
             <DocsPager
                 prev={{ title: 'Why TeraCloud?', href: '/docs/why-teracloud' }}
-                next={{ title: 'Architecture', href: '/docs/architecture' }}
+                next={{ title: 'Installation', href: '/docs/installation' }}
             />
         </motion.div>
     )
