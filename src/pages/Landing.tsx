@@ -3,6 +3,7 @@ import { useEffect, useRef } from 'react'
 import { animate, createScope, stagger } from 'animejs'
 import { motion } from 'framer-motion'
 import { ArrowRight, Check, Shield, Zap, Cloud, Lock, Globe, Sparkles, Star, Plus } from 'lucide-react'
+import PremiumFeatureCards from '../components/PremiumFeatureCards'
 
 const Landing = () => {
     const containerRef = useRef<HTMLDivElement>(null)
@@ -162,7 +163,7 @@ const Landing = () => {
     return (
         <div ref={containerRef} className="min-h-screen bg-black text-white font-sans antialiased relative overflow-hidden">
             {/* Parallax Background */}
-           {/* Navigation */}
+            {/* Navigation */}
             <nav className="border-b border-white/10">
                 <div className="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
                     <div className="flex items-center gap-8">
@@ -296,6 +297,9 @@ const Landing = () => {
                     </motion.div>
                 </div>
             </section>
+
+            {/* Premium Feature Cards - Supabase Style */}
+            <PremiumFeatureCards />
 
             {/* Features Section */}
             <section id="features" className="border-t border-zinc-900 py-24">

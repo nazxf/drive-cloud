@@ -1,3 +1,4 @@
+import { useNavigate } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import { FolderItem } from '../store/useStore'
 import { Folder, MoreVertical, Edit2, Share2, Trash2 } from 'lucide-react'
@@ -9,17 +10,24 @@ interface FolderCardProps {
 }
 
 const FolderCard = ({ folder, viewMode }: FolderCardProps) => {
+    const navigate = useNavigate()
+
     const formattedDate = new Date(folder.modifiedAt).toLocaleDateString('en-US', {
         month: 'short',
         day: 'numeric',
         year: 'numeric'
     })
 
+    const handleFolderClick = () => {
+        navigate(`/storage/${folder.id}`)
+    }
+
     if (viewMode === 'list') {
         return (
             <motion.div
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
+                onClick={handleFolderClick}
                 className="group flex items-center gap-4 px-4 py-3 rounded-xl border border-white/5 bg-white/[0.02] hover:bg-white/[0.05] hover:border-[var(--accent-primary)]/30 transition-all duration-300 cursor-pointer"
             >
                 <div className="p-2 rounded-lg bg-[var(--accent-primary)]/10 text-[var(--accent-primary)] group-hover:bg-[var(--accent-primary)]/20 transition-colors">
@@ -69,6 +77,7 @@ const FolderCard = ({ folder, viewMode }: FolderCardProps) => {
             animate={{ opacity: 1, y: 0 }}
             whileHover={{ y: -4, scale: 1.02 }}
             transition={{ duration: 0.2 }}
+            onClick={handleFolderClick}
             className="glass group relative rounded-2xl p-5 hover:border-[var(--accent-primary)]/30 hover:shadow-[0_0_30px_var(--accent-glow)] transition-all duration-300 cursor-pointer overflow-hidden"
         >
             {/* Gradient Glow Background */}

@@ -32,6 +32,7 @@ function App() {
             <Route element={<Dashboard />}>
                 <Route path="/dashboard" element={<Overview />} />
                 <Route path="/storage" element={<MyStorage />} />
+                <Route path="/storage/:folderId" element={<MyStorage />} />
                 <Route path="/recent" element={<Recents />} />
                 <Route path="/favorites" element={<Favorites />} />
                 <Route path="/trash" element={<Trash />} />

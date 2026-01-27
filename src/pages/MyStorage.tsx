@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
-import { useOutletContext } from 'react-router-dom'
-import { Filter, Grid, List as ListIcon, FolderPlus } from 'lucide-react'
+import { useOutletContext, useParams, useNavigate } from 'react-router-dom'
+import { Filter, Grid, List as ListIcon, FolderPlus, ChevronRight, Home } from 'lucide-react'
 import FileCard, { FileItem } from '../components/FileCard'
 import FolderCard from '../components/FolderCard'
 import FilePreviewModal from '../components/FilePreviewModal'
@@ -26,18 +26,24 @@ const allMockFiles: FileItem[] = [
 ]
 
 const MyStorage = () => {
+    const { folderId } = useParams()
+    const navigate = useNavigate()
     const { searchQuery } = useOutletContext<DashboardContext>()
+
     const [viewMode, setViewMode] = useState<'grid' | 'list'>('list')
     const [previewFile, setPreviewFile] = useState<FileItem | null>(null)
     const [isLoading, setIsLoading] = useState(true)
 
-    // Simulate loading
+    // Simulate loading on route change
     useEffect(() => {
+        setIsLoading(true)
         const timer = setTimeout(() => {
             setIsLoading(false)
-        }, 2000)
+        }, 1000)
         return () => clearTimeout(timer)
-    }, [])
+    }, [folderId])
+
+    const currentFolder = folderId ? mockFolders.find(f => f.id === folderId) : null
 
     // Filter data based on search query
     const filteredFolders = mockFolders.filter(folder =>
@@ -91,17 +97,44 @@ const MyStorage = () => {
         )
     }
 
+    // Breadcrumb Component
+    const Breadcrumbs = () => (
+        <div className="flex items-center gap-2 text-sm text-slate-400 mb-6 font-medium">
+            <button
+                onClick={() => navigate('/storage')}
+                className="hover:text-white flex items-center gap-1 transition-colors"
+            >
+                <Home className="w-4 h-4" />
+                Storage
+            </button>
+            {currentFolder && (
+                <>
+                    <ChevronRight className="w-4 h-4 text-slate-600" />
+                    <span className="text-white">{currentFolder.name}</span>
+                </>
+            )}
+        </div>
+    )
+
     return (
         <div className="flex-1 overflow-y-auto p-6 md:px-8 md:py-6 custom-scrollbar pb-24">
+
+            <Breadcrumbs />
+
             {/* Header */}
             <div className="flex items-center justify-between mb-6">
                 <div>
-                    <h2 className="text-xl font-semibold text-white">My Storage</h2>
+                    <h2 className="text-xl font-semibold text-white">
+                        {currentFolder ? currentFolder.name : 'My Storage'}
+                    </h2>
                     {isLoading ? (
                         <Skeleton className="h-4 w-48 mt-1" />
                     ) : (
                         <p className="text-sm text-slate-500 mt-1">
-                            {filteredFolders.length} folders, {filteredFiles.length} files
+                            {currentFolder
+                                ? `0 folders, ${Math.floor(filteredFiles.length / 2)} files`
+                                : `${filteredFolders.length} folders, ${filteredFiles.length} files`
+                            }
                         </p>
                     )}
                 </div>
@@ -136,31 +169,35 @@ const MyStorage = () => {
                 </div>
             </div>
 
-            {/* Folders Section */}
-            {isLoading ? (
-                <div className="mb-8">
-                    <Skeleton className="h-5 w-24 mb-4" />
-                    <div className={viewMode === 'grid'
-                        ? 'grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4'
-                        : 'space-y-2'
-                    }>
-                        {[1, 2, 3, 4].map((i) => (
-                            <FolderSkeleton key={i} />
-                        ))}
-                    </div>
-                </div>
-            ) : filteredFolders.length > 0 && (
-                <div className="mb-8">
-                    <h3 className="text-sm font-medium text-slate-400 mb-4">Folders</h3>
-                    <div className={viewMode === 'grid'
-                        ? 'grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4'
-                        : 'space-y-2'
-                    }>
-                        {filteredFolders.map((folder) => (
-                            <FolderCard key={folder.id} folder={folder} viewMode={viewMode} />
-                        ))}
-                    </div>
-                </div>
+            {/* Folders Section - Hide if inside a folder (for mock demo) */}
+            {!currentFolder && (
+                <>
+                    {isLoading ? (
+                        <div className="mb-8">
+                            <Skeleton className="h-5 w-24 mb-4" />
+                            <div className={viewMode === 'grid'
+                                ? 'grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4'
+                                : 'space-y-2'
+                            }>
+                                {[1, 2, 3, 4].map((i) => (
+                                    <FolderSkeleton key={i} />
+                                ))}
+                            </div>
+                        </div>
+                    ) : filteredFolders.length > 0 && (
+                        <div className="mb-8">
+                            <h3 className="text-sm font-medium text-slate-400 mb-4">Folders</h3>
+                            <div className={viewMode === 'grid'
+                                ? 'grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4'
+                                : 'space-y-2'
+                            }>
+                                {filteredFolders.map((folder) => (
+                                    <FolderCard key={folder.id} folder={folder} viewMode={viewMode} />
+                                ))}
+                            </div>
+                        </div>
+                    )}
+                </>
             )}
 
             {/* Files Section */}
@@ -184,7 +221,8 @@ const MyStorage = () => {
                             ? 'grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4'
                             : 'space-y-2'
                         }>
-                            {filteredFiles.map((file) => (
+                            {/* Simulate different files for nested view by splicing or reversing, just for show */}
+                            {(currentFolder ? filteredFiles.slice().reverse().slice(0, 5) : filteredFiles).map((file) => (
                                 <FileCard
                                     key={file.id}
                                     file={file}
@@ -195,6 +233,11 @@ const MyStorage = () => {
                             {filteredFiles.length === 0 && (
                                 <div className="col-span-full py-12 text-center text-slate-500">
                                     <p>No files found matching "{searchQuery}"</p>
+                                </div>
+                            )}
+                            {currentFolder && filteredFiles.length > 0 && (
+                                <div className="col-span-full py-8 text-center text-slate-500 text-xs italic">
+                                    Displaying mock files for folder {currentFolder.name}
                                 </div>
                             )}
                         </div>
