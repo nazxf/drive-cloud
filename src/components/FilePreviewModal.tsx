@@ -15,15 +15,15 @@ interface FilePreviewModalProps {
 }
 
 const getFileIcon = (type: string, size: 'sm' | 'lg' = 'lg') => {
-    const classes = size === 'lg' ? 'w-16 h-16' : 'w-6 h-6'
+    const classes = size === 'lg' ? 'w-16 h-16' : 'w-5 h-5'
     switch (type) {
         case 'image': return <ImageIcon className={`${classes} text-purple-400`} />
         case 'video': return <Video className={`${classes} text-orange-400`} />
         case 'pdf': return <FileText className={`${classes} text-red-400`} />
         case 'doc': return <FileText className={`${classes} text-blue-400`} />
-        case 'xls': return <FileText className={`${classes} text-green-400`} />
-        case 'zip': return <FileArchive className={`${classes} text-yellow-400`} />
-        default: return <FileText className={`${classes} text-slate-400`} />
+        case 'xls': return <FileText className={`${classes} text-emerald-400`} />
+        case 'zip': return <FileArchive className={`${classes} text-amber-400`} />
+        default: return <FileText className={`${classes} text-zinc-400`} />
     }
 }
 
@@ -59,9 +59,9 @@ const FilePreviewModal = ({ file, onClose }: FilePreviewModalProps) => {
                     {getFileIcon(file.type)}
                     <div>
                         <p className="text-lg font-medium text-white mb-1">No preview available</p>
-                        <p className="text-sm text-slate-500">This file type cannot be previewed</p>
+                        <p className="text-sm text-zinc-500">This file type cannot be previewed</p>
                     </div>
-                    <button className="flex items-center gap-2 px-4 py-2 bg-[var(--accent-secondary)] text-black rounded-lg text-sm font-semibold hover:bg-[var(--accent-secondary)]/90 transition-colors">
+                    <button className="flex items-center gap-2 px-4 py-2 bg-emerald-500 text-black rounded-lg text-sm font-semibold hover:bg-emerald-400 transition-colors">
                         <Download className="w-4 h-4" />
                         Download to view
                     </button>
@@ -102,7 +102,7 @@ const FilePreviewModal = ({ file, onClose }: FilePreviewModalProps) => {
                             alt="PDF Preview"
                             className="max-w-full max-h-[60vh] object-contain rounded-lg shadow-2xl"
                         />
-                        <p className="text-sm text-slate-500">PDF preview - Download for full document</p>
+                        <p className="text-sm text-zinc-500">PDF preview - Download for full document</p>
                     </div>
                 )
             default:
@@ -116,40 +116,40 @@ const FilePreviewModal = ({ file, onClose }: FilePreviewModalProps) => {
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}
-                className="fixed inset-0 bg-black/90 backdrop-blur-md z-50 flex flex-col"
+                className="fixed inset-0 bg-[#0a0a0a]/95 backdrop-blur-md z-50 flex flex-col"
                 onClick={onClose}
             >
                 {/* Header */}
                 <motion.div
                     initial={{ opacity: 0, y: -20 }}
                     animate={{ opacity: 1, y: 0 }}
-                    className="flex items-center justify-between px-6 py-4 border-b border-white/5"
+                    className="flex items-center justify-between px-6 py-4 border-b border-zinc-800/50"
                     onClick={(e) => e.stopPropagation()}
                 >
                     <div className="flex items-center gap-4">
-                        <div className="p-2 rounded-lg bg-white/5">
+                        <div className="p-2 rounded-lg bg-zinc-900 border border-zinc-800/50">
                             {getFileIcon(file.type, 'sm')}
                         </div>
                         <div>
-                            <h2 className="text-lg font-semibold text-white truncate max-w-md">{file.name}</h2>
-                            <p className="text-sm text-slate-500">{file.size} • Modified {file.modified}</p>
+                            <h2 className="text-base font-medium text-white truncate max-w-md">{file.name}</h2>
+                            <p className="text-sm text-zinc-500">{file.size} • Modified {file.modified}</p>
                         </div>
                     </div>
 
                     <div className="flex items-center gap-2">
                         {/* Zoom Controls (for images) */}
                         {file.type === 'image' && (
-                            <div className="flex items-center gap-1 mr-2 px-2 py-1 bg-white/5 rounded-lg">
+                            <div className="flex items-center gap-1 mr-2 px-2 py-1 bg-zinc-900 border border-zinc-800/50 rounded-lg">
                                 <button
                                     onClick={handleZoomOut}
-                                    className="p-1.5 text-slate-400 hover:text-white hover:bg-white/10 rounded transition-colors"
+                                    className="p-1.5 text-zinc-400 hover:text-white hover:bg-zinc-800 rounded transition-colors"
                                 >
                                     <ZoomOut className="w-4 h-4" />
                                 </button>
-                                <span className="text-xs text-slate-400 w-12 text-center">{Math.round(zoom * 100)}%</span>
+                                <span className="text-xs text-zinc-400 w-12 text-center">{Math.round(zoom * 100)}%</span>
                                 <button
                                     onClick={handleZoomIn}
-                                    className="p-1.5 text-slate-400 hover:text-white hover:bg-white/10 rounded transition-colors"
+                                    className="p-1.5 text-zinc-400 hover:text-white hover:bg-zinc-800 rounded transition-colors"
                                 >
                                     <ZoomIn className="w-4 h-4" />
                                 </button>
@@ -157,22 +157,22 @@ const FilePreviewModal = ({ file, onClose }: FilePreviewModalProps) => {
                         )}
 
                         {/* Actions */}
-                        <button className="p-2 text-slate-400 hover:text-white hover:bg-white/10 rounded-lg transition-colors" title="Open in new tab">
+                        <button className="p-2 text-zinc-400 hover:text-white hover:bg-zinc-800 rounded-lg transition-colors" title="Open in new tab">
                             <ExternalLink className="w-5 h-5" />
                         </button>
-                        <button className="p-2 text-slate-400 hover:text-white hover:bg-white/10 rounded-lg transition-colors" title="Share">
+                        <button className="p-2 text-zinc-400 hover:text-white hover:bg-zinc-800 rounded-lg transition-colors" title="Share">
                             <Share2 className="w-5 h-5" />
                         </button>
-                        <button className="p-2 text-slate-400 hover:text-white hover:bg-white/10 rounded-lg transition-colors" title="Download">
+                        <button className="p-2 text-zinc-400 hover:text-white hover:bg-zinc-800 rounded-lg transition-colors" title="Download">
                             <Download className="w-5 h-5" />
                         </button>
                         <button className="p-2 text-red-400 hover:text-red-300 hover:bg-red-500/10 rounded-lg transition-colors" title="Delete">
                             <Trash2 className="w-5 h-5" />
                         </button>
-                        <div className="w-px h-6 bg-white/10 mx-1" />
+                        <div className="w-px h-6 bg-zinc-800 mx-1" />
                         <button
                             onClick={onClose}
-                            className="p-2 text-slate-400 hover:text-white hover:bg-white/10 rounded-lg transition-colors"
+                            className="p-2 text-zinc-400 hover:text-white hover:bg-zinc-800 rounded-lg transition-colors"
                         >
                             <X className="w-5 h-5" />
                         </button>
@@ -193,7 +193,7 @@ const FilePreviewModal = ({ file, onClose }: FilePreviewModalProps) => {
                 <motion.div
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
-                    className="px-6 py-3 border-t border-white/5 flex items-center justify-center gap-6 text-xs text-slate-500"
+                    className="px-6 py-3 border-t border-zinc-800/50 flex items-center justify-center gap-6 text-xs text-zinc-500"
                     onClick={(e) => e.stopPropagation()}
                 >
                     <span>Type: {file.type.toUpperCase()}</span>

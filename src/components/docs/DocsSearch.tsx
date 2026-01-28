@@ -76,7 +76,7 @@ const DocsSearch = ({ isOpen, onClose }: DocsSearchProps) => {
                         animate={{ opacity: 1 }}
                         exit={{ opacity: 0 }}
                         onClick={onClose}
-                        className="fixed inset-0 bg-black/80 backdrop-blur-[2px] z-[60]"
+                        className="fixed inset-0 bg-black/80 backdrop-blur-sm z-[60]"
                     />
 
                     {/* Modal */}
@@ -87,9 +87,9 @@ const DocsSearch = ({ isOpen, onClose }: DocsSearchProps) => {
                         transition={{ duration: 0.2 }}
                         className="fixed left-1/2 top-[20%] -translate-x-1/2 w-full max-w-lg z-[70] p-4"
                     >
-                        <div className="bg-[#0A0A0A] border border-zinc-800 rounded-xl shadow-2xl overflow-hidden flex flex-col max-h-[60vh]">
+                        <div className="bg-zinc-950 border border-zinc-800 rounded-xl shadow-2xl overflow-hidden flex flex-col max-h-[60vh]">
                             {/* Input Header */}
-                            <div className="flex items-center gap-3 px-4 py-3 border-b border-white/5">
+                            <div className="flex items-center gap-3 px-4 py-3 border-b border-zinc-800/50">
                                 <Search className="w-5 h-5 text-zinc-500" />
                                 <input
                                     type="text"
@@ -100,7 +100,7 @@ const DocsSearch = ({ isOpen, onClose }: DocsSearchProps) => {
                                     autoFocus
                                 />
                                 <div className="hidden sm:flex items-center gap-1">
-                                    <kbd className="hidden sm:inline-flex h-5 items-center gap-1 rounded border border-white/10 bg-white/5 px-1.5 font-mono text-[10px] font-medium text-zinc-400 opacity-100">
+                                    <kbd className="hidden sm:inline-flex h-5 items-center gap-1 rounded border border-zinc-700 bg-zinc-800 px-1.5 font-mono text-[10px] font-medium text-zinc-400 opacity-100">
                                         <span className="text-xs">ESC</span>
                                     </kbd>
                                 </div>
@@ -114,19 +114,18 @@ const DocsSearch = ({ isOpen, onClose }: DocsSearchProps) => {
                                     </div>
                                 ) : (
                                     <div className="space-y-1">
-                                        {/* Group by category logic could go here, but flat list is fine for now with category labels */}
                                         {filteredItems.map((item, index) => (
                                             <button
                                                 key={item.href}
                                                 onClick={() => handleSelect(item.href)}
                                                 onMouseEnter={() => setSelectedIndex(index)}
                                                 className={`w-full flex items-center justify-between px-3 py-2 rounded-lg text-sm transition-colors ${index === selectedIndex
-                                                    ? 'bg-white/10 text-white'
-                                                    : 'text-zinc-400 hover:bg-white/5 hover:text-white'
+                                                    ? 'bg-emerald-500/10 text-emerald-400'
+                                                    : 'text-zinc-400 hover:bg-zinc-800/50 hover:text-white'
                                                     }`}
                                             >
                                                 <div className="flex items-center gap-3">
-                                                    <File className={`w-4 h-4 ${index === selectedIndex ? 'text-white' : 'text-zinc-500'}`} />
+                                                    <File className={`w-4 h-4 ${index === selectedIndex ? 'text-emerald-400' : 'text-zinc-500'}`} />
                                                     <div className="flex flex-col items-start">
                                                         <span>{item.title}</span>
                                                         <span className="text-[10px] text-zinc-500 uppercase tracking-wider">{item.category}</span>
@@ -143,7 +142,7 @@ const DocsSearch = ({ isOpen, onClose }: DocsSearchProps) => {
                             </div>
 
                             {/* Footer */}
-                            <div className="px-4 py-2 bg-white/[0.02] border-t border-white/5 flex items-center justify-between text-[10px] text-zinc-500">
+                            <div className="px-4 py-2 bg-zinc-900/50 border-t border-zinc-800/50 flex items-center justify-between text-[10px] text-zinc-500">
                                 <div className="flex gap-4">
                                     <span className="flex items-center gap-1">
                                         <ArrowRight className="w-3 h-3" /> to navigate

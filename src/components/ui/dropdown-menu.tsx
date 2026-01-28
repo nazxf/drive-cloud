@@ -58,7 +58,7 @@ export const DropdownMenu = ({ trigger, children, align = 'right' }: DropdownMen
                                 left: align === 'right' ? undefined : position.left,
                                 right: align === 'right' ? window.innerWidth - position.left : undefined,
                             }}
-                            className="fixed z-50 min-w-[8rem] overflow-hidden rounded-md border border-white/10 bg-[var(--bg-card)] p-1 text-slate-200 shadow-md animate-in data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2"
+                            className="fixed z-50 min-w-[8rem] overflow-hidden rounded-lg border border-zinc-800 bg-zinc-950 p-1 text-zinc-200 shadow-xl"
                         >
                             {children}
                         </motion.div>
@@ -77,7 +77,7 @@ export const DropdownMenuItem = ({ children, onClick, className = '' }: { childr
                 e.stopPropagation()
                 onClick?.()
             }}
-            className={`relative flex cursor-pointer select-none items-center rounded-sm px-2 py-1.5 text-sm outline-none transition-colors hover:bg-white/10 hover:text-white data-[disabled]:pointer-events-none data-[disabled]:opacity-50 ${className}`}
+            className={`relative flex cursor-pointer select-none items-center rounded-md px-2 py-1.5 text-sm outline-none transition-colors hover:bg-zinc-800 hover:text-white data-[disabled]:pointer-events-none data-[disabled]:opacity-50 ${className}`}
         >
             {children}
         </div>
@@ -85,11 +85,11 @@ export const DropdownMenuItem = ({ children, onClick, className = '' }: { childr
 }
 
 export const DropdownMenuLabel = ({ children }: { children: ReactNode }) => (
-    <div className="px-2 py-1.5 text-sm font-semibold text-slate-400">
+    <div className="px-2 py-1.5 text-sm font-medium text-zinc-500">
         {children}
     </div>
 )
 
 export const DropdownMenuSeparator = () => (
-    <div className="-mx-1 my-1 h-px bg-white/10" />
+    <div className="-mx-1 my-1 h-px bg-zinc-800" />
 )

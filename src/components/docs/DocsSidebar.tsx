@@ -63,7 +63,7 @@ const DocsSidebar = ({ isOpen, onClose }: DocsSidebarProps) => {
     ]
 
     const sidebarClasses = `
-        fixed inset-y-0 left-0 z-50 w-72 bg-[var(--bg-deep)] border-r border-white/5 transform transition-transform duration-300 ease-in-out lg:translate-x-0 lg:static lg:h-screen lg:w-64
+        fixed inset-y-0 left-0 z-50 w-72 bg-zinc-950 border-r border-zinc-800/50 transform transition-transform duration-300 ease-in-out lg:translate-x-0 lg:static lg:h-screen lg:w-64
         ${isOpen ? 'translate-x-0' : '-translate-x-full'}
     `
 
@@ -81,12 +81,12 @@ const DocsSidebar = ({ isOpen, onClose }: DocsSidebarProps) => {
 
             <aside className={sidebarClasses}>
                 <div className="flex flex-col h-full">
-                    <div className="h-14 flex items-center justify-between px-6 border-b border-white/5">
-                        <Link to="/dashboard" className="flex items-center gap-2 font-bold text-white tracking-tight">
-                            <img src="/logo.png" alt="TeraCloud" className="w-6 h-6 rounded-md" />
+                    <div className="h-14 flex items-center justify-between px-6 border-b border-zinc-800/50">
+                        <Link to="/dashboard" className="flex items-center gap-2 font-semibold text-white tracking-tight">
+                            <img src="/logo.png" alt="TeraCloud" className="w-7 h-7" />
                             <span>TeraCloud</span>
                         </Link>
-                        <button onClick={onClose} className="lg:hidden text-zinc-500 hover:text-white">
+                        <button onClick={onClose} className="lg:hidden text-zinc-500 hover:text-white transition-colors">
                             <X className="w-5 h-5" />
                         </button>
                     </div>
@@ -95,12 +95,12 @@ const DocsSidebar = ({ isOpen, onClose }: DocsSidebarProps) => {
                     <div className="px-4 py-3 pb-2">
                         <button
                             onClick={() => setIsSearchOpen(true)}
-                            className="w-full flex items-center gap-2 px-3 py-2 text-sm bg-white/5 border border-white/10 rounded-lg text-zinc-500 hover:text-zinc-300 hover:border-white/20 transition-all group"
+                            className="w-full flex items-center gap-2 px-3 py-2 text-sm bg-zinc-900 border border-zinc-800 rounded-lg text-zinc-500 hover:text-zinc-300 hover:border-zinc-700 transition-all group"
                         >
                             <Search className="w-4 h-4" />
                             <span className="flex-1 text-left">Search docs...</span>
                             <div className="hidden lg:flex items-center gap-1 opacity-70 group-hover:opacity-100 transition-opacity">
-                                <kbd className="hidden sm:inline-flex h-5 items-center gap-1 rounded border border-white/10 bg-white/5 px-1.5 font-mono text-[10px] font-medium text-zinc-400">
+                                <kbd className="hidden sm:inline-flex h-5 items-center gap-1 rounded border border-zinc-700 bg-zinc-800 px-1.5 font-mono text-[10px] font-medium text-zinc-400">
                                     <span className="text-xs">⌘</span>K
                                 </kbd>
                             </div>
@@ -111,7 +111,7 @@ const DocsSidebar = ({ isOpen, onClose }: DocsSidebarProps) => {
                         <nav className="space-y-8 mt-4">
                             {sections.map((section) => (
                                 <div key={section.title}>
-                                    <h4 className="mb-3 text-xs font-semibold text-white uppercase tracking-wider opacity-60 px-2">
+                                    <h4 className="mb-3 text-xs font-semibold text-zinc-500 uppercase tracking-wider px-2">
                                         {section.title}
                                     </h4>
                                     <ul className="space-y-1">
@@ -120,8 +120,8 @@ const DocsSidebar = ({ isOpen, onClose }: DocsSidebarProps) => {
                                                 <Link
                                                     to={item.href}
                                                     className={`block px-2 py-1.5 text-sm rounded-md transition-colors ${isActive(item.href)
-                                                        ? 'text-white bg-white/5 font-medium'
-                                                        : 'text-zinc-400 hover:text-white hover:bg-white/5'
+                                                        ? 'text-emerald-400 bg-emerald-500/10 font-medium'
+                                                        : 'text-zinc-400 hover:text-white hover:bg-zinc-800/50'
                                                         }`}
                                                     onClick={() => {
                                                         if (window.innerWidth < 1024) onClose()

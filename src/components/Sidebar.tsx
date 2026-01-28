@@ -6,9 +6,7 @@ const Sidebar = () => {
         <aside className="w-64 bg-zinc-950 border-r border-zinc-800/50 p-4 flex flex-col font-sans">
             {/* Logo */}
             <div className="mb-8 px-2 flex items-center gap-3">
-                <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-emerald-500 to-teal-600 flex items-center justify-center">
-                    <img src="/logo.png" alt="TeraCloud" className="w-5 h-5" />
-                </div>
+                <img src="/logo.png" alt="TeraCloud" className="w-8 h-8" />
                 <span className="font-semibold text-lg text-white tracking-tight">TeraCloud</span>
             </div>
 

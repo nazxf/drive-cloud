@@ -1,5 +1,151 @@
-import { motion } from 'framer-motion';
-import { Database, Lock, Zap, HardDrive, Radio, Box, Code2, Check } from 'lucide-react';
+import React, { useState, useRef } from 'react';
+import { motion, useMotionValue, useSpring, useTransform } from 'framer-motion';
+import { Database, Lock, Zap, HardDrive, Radio, Box, Code2, Check, Image, FileText, Video } from 'lucide-react';
+
+// ============================================
+// NEW STORAGE CARD COMPONENTS
+// ============================================
+
+const IconBox = ({ children }: { children: React.ReactNode }) => (
+    <div className="w-[72px] h-[72px] flex items-center justify-center rounded-xl border border-white/[0.08] bg-white/[0.03] backdrop-blur-sm transition-colors duration-300 group-hover:border-white/[0.15]">
+        {children}
+    </div>
+);
+
+const MarqueeRow = ({ children, direction = "left", speed = 40 }: { children: React.ReactNode, direction?: "left" | "right", speed?: number }) => {
+    return (
+        <div className="flex overflow-hidden select-none gap-3 py-1.5">
+            <motion.div
+                animate={{
+                    x: direction === "left" ? [0, -420] : [-420, 0],
+                }}
+                transition={{
+                    duration: speed,
+                    repeat: Infinity,
+                    ease: "linear",
+                }}
+                className="flex flex-none gap-3"
+            >
+                {children}
+                {children}
+            </motion.div>
+        </div>
+    );
+};
+
+const StorageFeatureCard = () => {
+    const [hovering, setHovering] = useState(false);
+    const containerRef = useRef<HTMLDivElement>(null);
+
+    const x = useMotionValue(0);
+    const y = useMotionValue(0);
+
+    const mouseX = useSpring(x, { stiffness: 150, damping: 20 });
+    const mouseY = useSpring(y, { stiffness: 150, damping: 20 });
+
+    const rotateX = useTransform(mouseY, [-0.5, 0.5], ["7deg", "-7deg"]);
+    const rotateY = useTransform(mouseX, [-0.5, 0.5], ["-7deg", "7deg"]);
+
+    const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+        if (!containerRef.current) return;
+        const rect = containerRef.current.getBoundingClientRect();
+
+        const width = rect.width;
+        const height = rect.height;
+        const mouseXPos = e.clientX - rect.left;
+        const mouseYPos = e.clientY - rect.top;
+
+        x.set(mouseXPos / width - 0.5);
+        y.set(mouseYPos / height - 0.5);
+    };
+
+    const handleMouseLeave = () => {
+        setHovering(false);
+        x.set(0);
+        y.set(0);
+    };
+
+    const renderIcons = (IconComponent: React.ElementType) =>
+        Array(8).fill(0).map((_, i) => (
+            <IconBox key={i}>
+                <IconComponent className="w-7 h-7 text-zinc-600 stroke-[1.5] transition-colors duration-500 group-hover:text-zinc-400" />
+            </IconBox>
+        ));
+
+    return (
+        <div className="h-full w-full perspective-1000">
+            <motion.div
+                ref={containerRef}
+                onMouseMove={handleMouseMove}
+                onMouseEnter={() => setHovering(true)}
+                onMouseLeave={handleMouseLeave}
+                style={{
+                    rotateX,
+                    rotateY,
+                    transformStyle: "preserve-3d",
+                }}
+                className="group relative w-full h-full bg-[#121212] rounded-[24px] border border-white/[0.1] overflow-hidden transition-shadow duration-500 hover:shadow-[0_20px_50px_rgba(0,0,0,0.5)] flex flex-col"
+            >
+                {/* Spotlight Effect */}
+                <div
+                    className="absolute inset-0 z-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"
+                    style={{
+                        background: `radial-gradient(circle 200px at var(--mouse-x) var(--mouse-y), rgba(255,255,255,0.06), transparent 80%)`,
+                    }}
+                    ref={(el) => {
+                        if (el && hovering) {
+                            const rect = containerRef.current?.getBoundingClientRect();
+                            if (rect) {
+                                el.style.setProperty('--mouse-x', `${(mouseX.get() + 0.5) * rect.width}px`);
+                                el.style.setProperty('--mouse-y', `${(mouseY.get() + 0.5) * rect.height}px`);
+                            }
+                        }
+                    }}
+                />
+
+                {/* Content */}
+                <div className="p-8 pb-4 relative z-20 pointer-events-none">
+                    <div className="flex items-center gap-3 mb-6">
+                        <div className="bg-white/5 p-2 rounded-lg border border-white/10 group-hover:border-white/20 transition-colors">
+                            <HardDrive className="w-6 h-6 text-white" />
+                        </div>
+                        <h2 className="text-white text-[19px] font-medium tracking-wide">Storage</h2>
+                    </div>
+
+                    <div className="space-y-1">
+                        <h3 className="text-white text-[20px] font-bold leading-tight">
+                            Store, organize, and serve
+                        </h3>
+                        <p className="text-[#71717a] text-[18px] leading-tight font-medium transition-colors group-hover:text-zinc-400">
+                            large files, from videos to images.
+                        </p>
+                    </div>
+                </div>
+
+                {/* Icons Animation Area */}
+                <div className="relative flex-1 min-h-[200px] overflow-hidden z-10 mt-auto">
+                    <div className="absolute inset-0 z-10 pointer-events-none bg-gradient-to-t from-[#121212] via-transparent to-transparent" />
+
+                    <div className="px-4 flex flex-col gap-1 transition-transform duration-500 group-hover:scale-[1.02]">
+                        <MarqueeRow direction="left" speed={50}>
+                            {renderIcons(Image)}
+                        </MarqueeRow>
+                        <MarqueeRow direction="right" speed={55}>
+                            {renderIcons(FileText)}
+                        </MarqueeRow>
+                        <MarqueeRow direction="left" speed={45}>
+                            {renderIcons(Video)}
+                        </MarqueeRow>
+                    </div>
+                </div>
+
+                {/* Border Highlight */}
+                <div className="absolute inset-0 border border-white/0 group-hover:border-white/10 rounded-[24px] transition-colors pointer-events-none" />
+            </motion.div>
+        </div>
+    );
+};
+
 
 // ============================================
 // ILLUSTRATION COMPONENTS - IMPROVED
@@ -14,9 +160,8 @@ const CloudDatabaseIllustration = () => (
             </linearGradient>
         </defs>
 
-        {/* Headset/Support illustration - like in reference */}
+        {/* Headset/Support illustration */}
         <g transform="translate(100, 85)">
-            {/* Main headband arc */}
             <path
                 d="M-40 0 C-40 -45, 40 -45, 40 0"
                 fill="none"
@@ -24,16 +169,10 @@ const CloudDatabaseIllustration = () => (
                 strokeWidth="3"
                 strokeLinecap="round"
             />
-
-            {/* Left ear cup */}
             <ellipse cx="-42" cy="8" rx="12" ry="18" fill="none" stroke="#6b7280" strokeWidth="2.5" />
             <ellipse cx="-42" cy="8" rx="7" ry="12" fill="url(#headsetGradient)" stroke="#4b5563" strokeWidth="1" />
-
-            {/* Right ear cup */}
             <ellipse cx="42" cy="8" rx="12" ry="18" fill="none" stroke="#6b7280" strokeWidth="2.5" />
             <ellipse cx="42" cy="8" rx="7" ry="12" fill="url(#headsetGradient)" stroke="#4b5563" strokeWidth="1" />
-
-            {/* Microphone arm */}
             <path
                 d="M-30 18 Q-35 35, -15 45 Q-5 48, 0 42"
                 fill="none"
@@ -41,13 +180,10 @@ const CloudDatabaseIllustration = () => (
                 strokeWidth="2"
                 strokeLinecap="round"
             />
-
-            {/* Microphone head */}
             <circle cx="0" cy="42" r="6" fill="none" stroke="#6b7280" strokeWidth="2" />
             <circle cx="0" cy="42" r="2" fill="#6b7280" />
         </g>
 
-        {/* Decorative corner brackets */}
         <g stroke="#10b981" strokeWidth="1" opacity="0.4">
             <path d="M15 15 L35 15 M15 15 L15 35" fill="none" />
             <path d="M185 15 L165 15 M185 15 L185 35" fill="none" />
@@ -57,7 +193,6 @@ const CloudDatabaseIllustration = () => (
 
 const AuthIllustration = () => (
     <div className="relative w-full h-full flex flex-col gap-2.5 p-4">
-        {/* Email/User rows - cleaner style */}
         {[
             { email: 's160198@gmail.com', user: 'alex160198' },
             { email: 'x234567@gmail.com', user: 'mememaster' },
@@ -74,15 +209,12 @@ const AuthIllustration = () => (
 
 const EdgeFunctionIllustration = () => (
     <div className="relative w-full h-full p-4 flex flex-col">
-        {/* Terminal command - styled like reference */}
         <div className="mb-6 bg-zinc-900/80 rounded-lg px-4 py-2.5 border border-emerald-500/40 inline-flex items-center gap-2 self-start">
             <span className="text-emerald-400 text-xs font-bold">$</span>
             <span className="text-xs text-zinc-200 font-mono">teracloud functions deploy</span>
         </div>
 
-        {/* Network visualization */}
         <svg viewBox="0 0 180 80" className="w-full flex-1">
-            {/* Connection lines */}
             <g stroke="#10b981" strokeWidth="1" opacity="0.5">
                 <line x1="90" y1="15" x2="40" y2="45" />
                 <line x1="90" y1="15" x2="90" y2="55" />
@@ -92,42 +224,20 @@ const EdgeFunctionIllustration = () => (
                 <line x1="40" y1="45" x2="140" y2="45" strokeDasharray="3,3" />
             </g>
 
-            {/* Nodes */}
             <circle cx="90" cy="15" r="5" fill="#10b981" />
             <circle cx="40" cy="45" r="4" fill="#10b981" opacity="0.7" />
             <circle cx="90" cy="55" r="4" fill="#10b981" opacity="0.7" />
             <circle cx="140" cy="45" r="4" fill="#10b981" opacity="0.7" />
 
-            {/* Extra decorative nodes */}
             <circle cx="20" cy="65" r="2" fill="#10b981" opacity="0.3" />
             <circle cx="160" cy="65" r="2" fill="#10b981" opacity="0.3" />
         </svg>
     </div>
 );
 
-const StorageIllustration = () => (
-    <div className="w-full h-full p-4 pt-6">
-        {/* File type grid - cleaner like reference */}
-        <div className="grid grid-cols-5 gap-2">
-            {[...Array(15)].map((_, i) => (
-                <div
-                    key={i}
-                    className="aspect-square rounded-md border border-zinc-800 bg-zinc-900/40 flex items-center justify-center hover:border-zinc-700 transition-colors"
-                >
-                    <svg viewBox="0 0 24 24" className="w-4 h-4 text-zinc-600">
-                        <rect x="4" y="2" width="16" height="20" rx="2" fill="none" stroke="currentColor" strokeWidth="1.5" />
-                        <path d="M8 7h8M8 11h8M8 15h4" stroke="currentColor" strokeWidth="1" strokeLinecap="round" opacity="0.5" />
-                    </svg>
-                </div>
-            ))}
-        </div>
-    </div>
-);
-
 const RealtimeIllustration = () => (
     <div className="w-full h-full p-4 flex items-center justify-center relative">
         <svg viewBox="0 0 160 100" className="w-full h-full">
-            {/* Cursor 1 - Dark */}
             <g transform="translate(45, 25)">
                 <path
                     d="M0 0 L0 24 L6 18 L12 30 L16 28 L10 16 L18 16 Z"
@@ -136,8 +246,6 @@ const RealtimeIllustration = () => (
                     strokeWidth="1"
                 />
             </g>
-
-            {/* Cursor 2 - Light */}
             <g transform="translate(85, 45)">
                 <path
                     d="M0 0 L0 24 L6 18 L12 30 L16 28 L10 16 L18 16 Z"
@@ -146,8 +254,6 @@ const RealtimeIllustration = () => (
                     strokeWidth="1"
                 />
             </g>
-
-            {/* Connection indicator dots */}
             <g transform="translate(120, 50)">
                 <circle cx="0" cy="0" r="3" fill="#10b981" />
                 <circle cx="10" cy="0" r="3" fill="#10b981" />
@@ -159,18 +265,14 @@ const RealtimeIllustration = () => (
 
 const VectorIllustration = () => (
     <div className="w-full h-full p-4 flex flex-col items-center justify-center">
-        {/* 3D Hexagonal cube - like reference */}
         <svg viewBox="0 0 120 100" className="w-full flex-1">
             <g transform="translate(60, 50)">
-                {/* Outer hexagon */}
                 <polygon
                     points="0,-35 30,-17 30,17 0,35 -30,17 -30,-17"
                     fill="none"
                     stroke="#10b981"
                     strokeWidth="1.5"
                 />
-
-                {/* Inner connecting lines to center */}
                 <line x1="0" y1="-35" x2="0" y2="0" stroke="#10b981" strokeWidth="0.5" opacity="0.4" />
                 <line x1="30" y1="-17" x2="0" y2="0" stroke="#10b981" strokeWidth="0.5" opacity="0.4" />
                 <line x1="30" y1="17" x2="0" y2="0" stroke="#10b981" strokeWidth="0.5" opacity="0.4" />
@@ -178,7 +280,6 @@ const VectorIllustration = () => (
                 <line x1="-30" y1="17" x2="0" y2="0" stroke="#10b981" strokeWidth="0.5" opacity="0.4" />
                 <line x1="-30" y1="-17" x2="0" y2="0" stroke="#10b981" strokeWidth="0.5" opacity="0.4" />
 
-                {/* Vertex dots */}
                 <circle cx="0" cy="-35" r="3" fill="#10b981" />
                 <circle cx="30" cy="-17" r="3" fill="#10b981" />
                 <circle cx="30" cy="17" r="3" fill="#10b981" />
@@ -340,17 +441,10 @@ export const BentoFeatureGrid = () => {
 
                 {/* Bottom Row - 4 smaller cards */}
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-                    {/* Storage */}
-                    <FeatureCard
-                        icon={<HardDrive className="w-5 h-5" />}
-                        title="Storage"
-                        description={
-                            <span>
-                                <span className="text-white font-medium">Store, organize, and serve</span> large files, from videos to images.
-                            </span>
-                        }
-                        illustration={<StorageIllustration />}
-                    />
+                    {/* Storage - REPLACED WITH NEW 3D CARD */}
+                    <div className="h-full">
+                        <StorageFeatureCard />
+                    </div>
 
                     {/* Realtime */}
                     <FeatureCard

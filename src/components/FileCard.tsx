@@ -19,25 +19,25 @@ interface FileCardProps {
 
 const getFileIcon = (type: string) => {
     switch (type) {
-        case 'image': return <Image className="w-6 h-6 text-purple-400" />
-        case 'video': return <Video className="w-6 h-6 text-orange-400" />
-        case 'pdf': return <FileText className="w-6 h-6 text-red-400" />
-        case 'doc': return <FileText className="w-6 h-6 text-blue-400" />
-        case 'xls': return <FileText className="w-6 h-6 text-green-400" />
-        case 'zip': return <FileArchive className="w-6 h-6 text-yellow-400" />
-        default: return <FileText className="w-6 h-6 text-slate-400" />
+        case 'image': return <Image className="w-5 h-5 text-purple-400" />
+        case 'video': return <Video className="w-5 h-5 text-orange-400" />
+        case 'pdf': return <FileText className="w-5 h-5 text-red-400" />
+        case 'doc': return <FileText className="w-5 h-5 text-blue-400" />
+        case 'xls': return <FileText className="w-5 h-5 text-emerald-400" />
+        case 'zip': return <FileArchive className="w-5 h-5 text-amber-400" />
+        default: return <FileText className="w-5 h-5 text-zinc-400" />
     }
 }
 
-const getFileColor = (type: string) => {
+const getFileBgColor = (type: string) => {
     switch (type) {
-        case 'image': return 'from-purple-500/20 to-purple-500/5'
-        case 'video': return 'from-orange-500/20 to-orange-500/5'
-        case 'pdf': return 'from-red-500/20 to-red-500/5'
-        case 'doc': return 'from-blue-500/20 to-blue-500/5'
-        case 'xls': return 'from-green-500/20 to-green-500/5'
-        case 'zip': return 'from-yellow-500/20 to-yellow-500/5'
-        default: return 'from-slate-500/20 to-slate-500/5'
+        case 'image': return 'bg-purple-500/10'
+        case 'video': return 'bg-orange-500/10'
+        case 'pdf': return 'bg-red-500/10'
+        case 'doc': return 'bg-blue-500/10'
+        case 'xls': return 'bg-emerald-500/10'
+        case 'zip': return 'bg-amber-500/10'
+        default: return 'bg-zinc-500/10'
     }
 }
 
@@ -45,7 +45,7 @@ const FileCard = ({ file, viewMode, isSelected, onSelect }: FileCardProps) => {
     const ActionMenu = () => (
         <DropdownMenu
             trigger={
-                <button className="p-1.5 text-slate-500 hover:text-white hover:bg-white/10 rounded-lg transition-colors opacity-0 group-hover:opacity-100">
+                <button className="p-1.5 text-zinc-500 hover:text-white hover:bg-zinc-700 rounded-lg transition-colors opacity-0 group-hover:opacity-100">
                     <MoreVertical className="w-4 h-4" />
                 </button>
             }
@@ -78,21 +78,21 @@ const FileCard = ({ file, viewMode, isSelected, onSelect }: FileCardProps) => {
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 onClick={onSelect}
-                className={`group flex items-center gap-4 px-4 py-3 rounded-xl border transition-all duration-200 cursor-pointer ${isSelected
-                        ? 'bg-[var(--accent-primary)]/5 border-[var(--accent-primary)]/30'
-                        : 'border-white/5 bg-white/[0.02] hover:bg-white/[0.05] hover:border-white/10'
+                className={`group flex items-center gap-4 px-4 py-3 rounded-lg border transition-all duration-200 cursor-pointer ${isSelected
+                    ? 'bg-emerald-500/5 border-emerald-500/30'
+                    : 'border-zinc-800/50 bg-zinc-900/50 hover:bg-zinc-800/50 hover:border-zinc-700'
                     }`}
             >
-                <div className={`p-2 rounded-lg bg-gradient-to-br ${getFileColor(file.type)}`}>
+                <div className={`p-2 rounded-lg ${getFileBgColor(file.type)}`}>
                     {getFileIcon(file.type)}
                 </div>
                 <div className="flex-1 min-w-0">
-                    <p className="text-sm font-medium text-slate-200 group-hover:text-white truncate transition-colors">
+                    <p className="text-sm font-medium text-zinc-200 group-hover:text-white truncate transition-colors">
                         {file.name}
                     </p>
-                    <p className="text-xs text-slate-500">{file.size}</p>
+                    <p className="text-xs text-zinc-500">{file.size}</p>
                 </div>
-                <div className="text-slate-500 text-xs hidden md:block w-32">
+                <div className="text-zinc-500 text-xs hidden md:block w-32">
                     {file.modified}
                 </div>
                 <div onClick={(e) => e.stopPropagation()}>
@@ -107,20 +107,17 @@ const FileCard = ({ file, viewMode, isSelected, onSelect }: FileCardProps) => {
         <motion.div
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
-            whileHover={{ y: -4 }}
+            whileHover={{ y: -2 }}
             transition={{ duration: 0.2 }}
             onClick={onSelect}
-            className={`glass group relative rounded-2xl p-5 transition-all duration-300 cursor-pointer overflow-hidden ${isSelected
-                    ? 'border-[var(--accent-primary)]/50 shadow-[0_0_20px_var(--accent-glow)]'
-                    : 'hover:border-[var(--accent-primary)]/30 hover:shadow-[0_0_30px_var(--accent-glow)]'
+            className={`group relative rounded-xl p-5 bg-zinc-950 transition-all duration-200 cursor-pointer ${isSelected
+                ? 'border-emerald-500/50 border'
+                : 'border border-zinc-800/50 hover:border-zinc-700'
                 }`}
         >
-            {/* Gradient Glow Background */}
-            <div className={`absolute inset-0 bg-gradient-to-br ${getFileColor(file.type)} opacity-0 group-hover:opacity-100 transition-opacity duration-500`} />
-
             <div className="relative z-10">
                 <div className="flex justify-between items-start mb-4">
-                    <div className={`w-14 h-14 rounded-xl bg-gradient-to-br ${getFileColor(file.type)} border border-white/5 flex items-center justify-center group-hover:scale-110 transition-transform duration-300`}>
+                    <div className={`w-12 h-12 rounded-xl ${getFileBgColor(file.type)} border border-zinc-800/50 flex items-center justify-center group-hover:scale-105 transition-transform duration-200`}>
                         {getFileIcon(file.type)}
                     </div>
                     <div onClick={(e) => e.stopPropagation()}>
@@ -128,15 +125,15 @@ const FileCard = ({ file, viewMode, isSelected, onSelect }: FileCardProps) => {
                     </div>
                 </div>
 
-                <h3 className="text-sm font-medium text-slate-200 group-hover:text-white mb-1 truncate transition-colors">
+                <h3 className="text-sm font-medium text-zinc-200 group-hover:text-white mb-1 truncate transition-colors">
                     {file.name}
                 </h3>
 
                 <div className="flex justify-between items-end mt-3">
-                    <div className="text-xs text-slate-500 group-hover:text-slate-400 transition-colors">
+                    <div className="text-xs text-zinc-500">
                         {file.size}
                     </div>
-                    <span className="text-[10px] uppercase tracking-wider font-semibold text-slate-600 group-hover:text-[var(--accent-primary)] transition-colors">
+                    <span className="text-[10px] uppercase font-medium text-zinc-600">
                         {file.type.toUpperCase()}
                     </span>
                 </div>

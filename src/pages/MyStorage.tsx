@@ -59,11 +59,11 @@ const MyStorage = () => {
     }
 
     const FolderSkeleton = () => (
-        <div className="flex items-center gap-3 p-4 rounded-2xl bg-white/[0.02] border border-white/5">
-            <Skeleton className="w-10 h-10 rounded-lg bg-blue-500/20" />
+        <div className="flex items-center gap-3 p-4 rounded-xl bg-zinc-900/50 border border-zinc-800/50">
+            <Skeleton className="w-10 h-10 rounded-lg bg-emerald-500/10" />
             <div className="flex-1">
-                <Skeleton className="h-4 w-24 mb-2 bg-white/10" />
-                <Skeleton className="h-3 w-16 bg-white/5" />
+                <Skeleton className="h-4 w-24 mb-2 bg-zinc-800" />
+                <Skeleton className="h-3 w-16 bg-zinc-800/50" />
             </div>
         </div>
     )
@@ -71,27 +71,27 @@ const MyStorage = () => {
     const FileCardSkeleton = () => {
         if (viewMode === 'list') {
             return (
-                <div className="flex items-center gap-4 px-4 py-3 rounded-xl border border-white/5 bg-white/[0.02]">
-                    <Skeleton className="w-10 h-10 rounded-lg lg" />
+                <div className="flex items-center gap-4 px-4 py-3 rounded-lg border border-zinc-800/50 bg-zinc-900/50">
+                    <Skeleton className="w-10 h-10 rounded-lg bg-zinc-800" />
                     <div className="flex-1">
-                        <Skeleton className="h-4 w-32 mb-1" />
-                        <Skeleton className="h-3 w-12" />
+                        <Skeleton className="h-4 w-32 mb-1 bg-zinc-800" />
+                        <Skeleton className="h-3 w-12 bg-zinc-800/50" />
                     </div>
-                    <Skeleton className="h-3 w-24 hidden md:block" />
-                    <Skeleton className="w-8 h-8 rounded-lg" />
+                    <Skeleton className="h-3 w-24 hidden md:block bg-zinc-800/50" />
+                    <Skeleton className="w-8 h-8 rounded-lg bg-zinc-800/50" />
                 </div>
             )
         }
         return (
-            <div className="rounded-2xl p-5 bg-white/[0.02] border border-white/5">
+            <div className="rounded-xl p-5 bg-zinc-950 border border-zinc-800/50">
                 <div className="flex justify-between items-start mb-4">
-                    <Skeleton className="w-14 h-14 rounded-xl" />
-                    <Skeleton className="w-6 h-6 rounded-lg" />
+                    <Skeleton className="w-12 h-12 rounded-xl bg-zinc-800" />
+                    <Skeleton className="w-6 h-6 rounded-lg bg-zinc-800/50" />
                 </div>
-                <Skeleton className="h-4 w-3/4 mb-3" />
+                <Skeleton className="h-4 w-3/4 mb-3 bg-zinc-800" />
                 <div className="flex justify-between items-end">
-                    <Skeleton className="h-3 w-12" />
-                    <Skeleton className="h-3 w-8" />
+                    <Skeleton className="h-3 w-12 bg-zinc-800/50" />
+                    <Skeleton className="h-3 w-8 bg-zinc-800/50" />
                 </div>
             </div>
         )
@@ -99,7 +99,7 @@ const MyStorage = () => {
 
     // Breadcrumb Component
     const Breadcrumbs = () => (
-        <div className="flex items-center gap-2 text-sm text-slate-400 mb-6 font-medium">
+        <div className="flex items-center gap-2 text-sm text-zinc-400 mb-6 font-medium">
             <button
                 onClick={() => navigate('/storage')}
                 className="hover:text-white flex items-center gap-1 transition-colors"
@@ -109,7 +109,7 @@ const MyStorage = () => {
             </button>
             {currentFolder && (
                 <>
-                    <ChevronRight className="w-4 h-4 text-slate-600" />
+                    <ChevronRight className="w-4 h-4 text-zinc-600" />
                     <span className="text-white">{currentFolder.name}</span>
                 </>
             )}
@@ -124,13 +124,13 @@ const MyStorage = () => {
             {/* Header */}
             <div className="flex items-center justify-between mb-6">
                 <div>
-                    <h2 className="text-xl font-semibold text-white">
+                    <h2 className="text-lg font-medium text-white">
                         {currentFolder ? currentFolder.name : 'My Storage'}
                     </h2>
                     {isLoading ? (
-                        <Skeleton className="h-4 w-48 mt-1" />
+                        <Skeleton className="h-4 w-48 mt-1 bg-zinc-800" />
                     ) : (
-                        <p className="text-sm text-slate-500 mt-1">
+                        <p className="text-sm text-zinc-500 mt-1">
                             {currentFolder
                                 ? `0 folders, ${Math.floor(filteredFiles.length / 2)} files`
                                 : `${filteredFolders.length} folders, ${filteredFiles.length} files`
@@ -142,8 +142,8 @@ const MyStorage = () => {
                     <button
                         onClick={() => setViewMode('grid')}
                         className={`p-2 rounded-lg transition-colors ${viewMode === 'grid'
-                            ? 'text-white bg-white/10'
-                            : 'text-slate-400 hover:text-white hover:bg-white/5'
+                            ? 'text-white bg-zinc-800'
+                            : 'text-zinc-400 hover:text-white hover:bg-zinc-800/50'
                             }`}
                     >
                         <Grid className="w-5 h-5" />
@@ -151,18 +151,18 @@ const MyStorage = () => {
                     <button
                         onClick={() => setViewMode('list')}
                         className={`p-2 rounded-lg transition-colors ${viewMode === 'list'
-                            ? 'text-white bg-white/10'
-                            : 'text-slate-400 hover:text-white hover:bg-white/5'
+                            ? 'text-white bg-zinc-800'
+                            : 'text-zinc-400 hover:text-white hover:bg-zinc-800/50'
                             }`}
                     >
                         <ListIcon className="w-5 h-5" />
                     </button>
-                    <div className="w-px h-5 bg-white/10 mx-1" />
-                    <button className="flex items-center gap-2 px-3 py-2 text-sm text-slate-400 hover:text-white hover:bg-white/5 rounded-lg transition-colors border border-white/5">
+                    <div className="w-px h-5 bg-zinc-800 mx-1" />
+                    <button className="flex items-center gap-2 px-3 py-2 text-sm text-zinc-400 hover:text-white hover:bg-zinc-800/50 rounded-lg transition-colors border border-zinc-800">
                         <Filter className="w-4 h-4" />
                         Filter
                     </button>
-                    <button className="flex items-center gap-2 px-3 py-2 text-sm bg-[var(--accent-primary)]/10 text-[var(--accent-primary)] hover:bg-[var(--accent-primary)]/20 rounded-lg transition-colors border border-[var(--accent-primary)]/30">
+                    <button className="flex items-center gap-2 px-3 py-2 text-sm bg-emerald-500/10 text-emerald-400 hover:bg-emerald-500/20 rounded-lg transition-colors border border-emerald-500/30">
                         <FolderPlus className="w-4 h-4" />
                         New Folder
                     </button>
@@ -174,7 +174,7 @@ const MyStorage = () => {
                 <>
                     {isLoading ? (
                         <div className="mb-8">
-                            <Skeleton className="h-5 w-24 mb-4" />
+                            <Skeleton className="h-5 w-24 mb-4 bg-zinc-800" />
                             <div className={viewMode === 'grid'
                                 ? 'grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4'
                                 : 'space-y-2'
@@ -186,7 +186,7 @@ const MyStorage = () => {
                         </div>
                     ) : filteredFolders.length > 0 && (
                         <div className="mb-8">
-                            <h3 className="text-sm font-medium text-slate-400 mb-4">Folders</h3>
+                            <h3 className="text-sm font-medium text-zinc-400 mb-4">Folders</h3>
                             <div className={viewMode === 'grid'
                                 ? 'grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4'
                                 : 'space-y-2'
@@ -204,7 +204,7 @@ const MyStorage = () => {
             <div>
                 {isLoading ? (
                     <>
-                        <Skeleton className="h-5 w-24 mb-4" />
+                        <Skeleton className="h-5 w-24 mb-4 bg-zinc-800" />
                         <div className={viewMode === 'grid'
                             ? 'grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4'
                             : 'space-y-2'
@@ -216,7 +216,7 @@ const MyStorage = () => {
                     </>
                 ) : (
                     <>
-                        <h3 className="text-sm font-medium text-slate-400 mb-4">Files</h3>
+                        <h3 className="text-sm font-medium text-zinc-400 mb-4">Files</h3>
                         <div className={viewMode === 'grid'
                             ? 'grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4'
                             : 'space-y-2'
@@ -231,12 +231,12 @@ const MyStorage = () => {
                                 />
                             ))}
                             {filteredFiles.length === 0 && (
-                                <div className="col-span-full py-12 text-center text-slate-500">
+                                <div className="col-span-full py-12 text-center text-zinc-500">
                                     <p>No files found matching "{searchQuery}"</p>
                                 </div>
                             )}
                             {currentFolder && filteredFiles.length > 0 && (
-                                <div className="col-span-full py-8 text-center text-slate-500 text-xs italic">
+                                <div className="col-span-full py-8 text-center text-zinc-500 text-xs italic">
                                     Displaying mock files for folder {currentFolder.name}
                                 </div>
                             )}

@@ -15,16 +15,27 @@ const getFileIcon = (type: string) => {
     switch (type) {
         case 'doc': return <FileText className="w-4 h-4 text-blue-400" />
         case 'pdf': return <FileText className="w-4 h-4 text-red-400" />
-        case 'xls': return <FileText className="w-4 h-4 text-green-400" />
+        case 'xls': return <FileText className="w-4 h-4 text-emerald-400" />
         case 'image': return <ImageIcon className="w-4 h-4 text-purple-400" />
         case 'video': return <Video className="w-4 h-4 text-orange-400" />
-        default: return <FileText className="w-4 h-4 text-slate-400" />
+        default: return <FileText className="w-4 h-4 text-zinc-400" />
+    }
+}
+
+const getFileBgColor = (type: string) => {
+    switch (type) {
+        case 'doc': return 'bg-blue-500/10'
+        case 'pdf': return 'bg-red-500/10'
+        case 'xls': return 'bg-emerald-500/10'
+        case 'image': return 'bg-purple-500/10'
+        case 'video': return 'bg-orange-500/10'
+        default: return 'bg-zinc-500/10'
     }
 }
 
 const UsersIcon = () => (
-    <div className="flex items-center gap-1 text-slate-400">
-        <div className="w-4 h-4 rounded-full bg-[var(--accent-secondary)]/20 flex items-center justify-center text-[var(--accent-secondary)] text-[10px]">
+    <div className="flex items-center gap-1.5 text-zinc-400">
+        <div className="w-5 h-5 rounded-full bg-emerald-500/20 flex items-center justify-center text-emerald-400 text-[10px] font-medium">
             T
         </div>
         <span>Team</span>
@@ -52,11 +63,11 @@ const RecentFilesTable = () => {
     return (
         <div className="w-full">
             <div className="flex items-center justify-between mb-4">
-                <h3 className="text-white font-medium text-lg">Recent files</h3>
+                <h3 className="text-white font-medium text-base">Recent files</h3>
                 {selectedIds.length > 0 && (
                     <div className="flex items-center gap-2 animate-in fade-in slide-in-from-bottom-2 duration-300">
-                        <span className="text-sm text-slate-400">{selectedIds.length} selected</span>
-                        <button className="p-2 text-slate-300 hover:text-white hover:bg-white/10 rounded-lg transition-colors" title="Download Selected">
+                        <span className="text-sm text-zinc-400">{selectedIds.length} selected</span>
+                        <button className="p-2 text-zinc-300 hover:text-white hover:bg-zinc-800 rounded-lg transition-colors" title="Download Selected">
                             <Download className="w-4 h-4" />
                         </button>
                         <button className="p-2 text-red-400 hover:text-red-300 hover:bg-red-500/10 rounded-lg transition-colors" title="Delete Selected">
@@ -66,19 +77,19 @@ const RecentFilesTable = () => {
                 )}
             </div>
 
-            <div className="w-full overflow-x-auto pb-4">
+            <div className="w-full overflow-x-auto rounded-xl border border-zinc-800/50">
                 <table className="w-full text-left border-collapse">
                     <thead>
-                        <tr className="text-slate-500 text-xs border-b border-white/5">
+                        <tr className="text-zinc-500 text-xs border-b border-zinc-800/50 bg-zinc-900/50">
                             <th className="py-3 px-4 font-medium w-6">
                                 <div
                                     onClick={toggleAll}
                                     className={`w-4 h-4 rounded border flex items-center justify-center cursor-pointer transition-all ${selectedIds.length === recentFiles.length
-                                        ? 'bg-[var(--accent-primary)] border-[var(--accent-primary)]'
-                                        : 'border-slate-600 hover:border-slate-500'
+                                        ? 'bg-emerald-500 border-emerald-500'
+                                        : 'border-zinc-600 hover:border-zinc-500'
                                         }`}
                                 >
-                                    {selectedIds.length === recentFiles.length && <div className="w-2 h-2 bg-white rounded-sm" />}
+                                    {selectedIds.length === recentFiles.length && <div className="w-2 h-2 bg-black rounded-sm" />}
                                 </div>
                             </th>
                             <th className="py-3 px-4 font-medium w-1/2">Name</th>
@@ -91,46 +102,46 @@ const RecentFilesTable = () => {
                         {recentFiles.map((file) => (
                             <tr
                                 key={file.id}
-                                className={`group border-b border-white/5 transition-all duration-200 ${selectedIds.includes(file.id) ? 'bg-[var(--accent-primary)]/5' : 'hover:bg-white/[0.02]'
+                                className={`group border-b border-zinc-800/50 transition-all duration-200 cursor-pointer ${selectedIds.includes(file.id) ? 'bg-emerald-500/5' : 'hover:bg-zinc-900/50'
                                     }`}
                                 onClick={() => toggleSelection(file.id)}
                             >
                                 <td className="py-3 px-4">
                                     <div
                                         className={`w-4 h-4 rounded border flex items-center justify-center cursor-pointer transition-all ${selectedIds.includes(file.id)
-                                            ? 'bg-[var(--accent-primary)] border-[var(--accent-primary)]'
-                                            : 'border-slate-700 hover:border-[var(--accent-primary)]'
+                                            ? 'bg-emerald-500 border-emerald-500'
+                                            : 'border-zinc-700 hover:border-emerald-500'
                                             }`}
                                     >
-                                        {selectedIds.includes(file.id) && <div className="w-2 h-2 bg-white rounded-sm" />}
+                                        {selectedIds.includes(file.id) && <div className="w-2 h-2 bg-black rounded-sm" />}
                                     </div>
                                 </td>
                                 <td className="py-3 px-4">
                                     <div className="flex items-center gap-3">
-                                        <div className="p-1.5 rounded bg-white/5 border border-white/5 group-hover:bg-white/10 transition-colors">
+                                        <div className={`p-1.5 rounded-lg ${getFileBgColor(file.type)}`}>
                                             {getFileIcon(file.type)}
                                         </div>
-                                        <span className={`font-medium transition-colors ${selectedIds.includes(file.id) ? 'text-white' : 'text-slate-300 group-hover:text-white'
+                                        <span className={`font-medium transition-colors ${selectedIds.includes(file.id) ? 'text-white' : 'text-zinc-300 group-hover:text-white'
                                             }`}>
                                             {file.name}
                                         </span>
                                     </div>
                                 </td>
-                                <td className="py-3 px-4 text-slate-400">{file.size}</td>
+                                <td className="py-3 px-4 text-zinc-400">{file.size}</td>
                                 <td className="py-3 px-4">
                                     <div className="flex items-center gap-2">
-                                        {file.shared === 'Team' ? <UsersIcon /> : <span className="text-slate-400">{file.shared}</span>}
+                                        {file.shared === 'Team' ? <UsersIcon /> : <span className="text-zinc-400">{file.shared}</span>}
                                     </div>
                                 </td>
                                 <td className="py-3 px-4">
                                     <div className="flex items-center justify-end gap-4">
-                                        <span className="text-slate-400 text-sm">{file.modified}</span>
+                                        <span className="text-zinc-500 text-sm">{file.modified}</span>
 
                                         {/* Action Menu - Stops propagation to prevent row selection when clicking menu */}
                                         <div onClick={(e) => e.stopPropagation()}>
                                             <DropdownMenu
                                                 trigger={
-                                                    <button className="p-1 text-slate-500 hover:text-white hover:bg-white/10 rounded transition-colors opacity-0 group-hover:opacity-100 data-[state=open]:opacity-100">
+                                                    <button className="p-1 text-zinc-500 hover:text-white hover:bg-zinc-700 rounded transition-colors opacity-0 group-hover:opacity-100 data-[state=open]:opacity-100">
                                                         <MoreVertical className="w-4 h-4" />
                                                     </button>
                                                 }

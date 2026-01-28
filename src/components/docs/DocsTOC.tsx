@@ -92,8 +92,8 @@ const DocsTOC = () => {
     }
 
     return (
-        <div className="hidden xl:block w-64 sticky top-6 h-fit pl-8 border-l border-white/5">
-            <h4 className="text-sm font-semibold text-white mb-4">On This Page</h4>
+        <div className="hidden xl:block w-64 sticky top-6 h-fit pl-8 border-l border-zinc-800/50">
+            <h4 className="text-sm font-medium text-white mb-4">On This Page</h4>
             <ul className="space-y-2.5">
                 {items.map((item) => (
                     <li key={item.id}>
@@ -101,7 +101,7 @@ const DocsTOC = () => {
                             href={`#${item.id}`}
                             className={`text-sm transition-colors block ${item.level === 3 ? 'pl-3' : ''
                                 } ${activeId === item.id
-                                    ? 'text-white font-medium'
+                                    ? 'text-emerald-400 font-medium'
                                     : 'text-zinc-500 hover:text-zinc-300'
                                 }`}
                         >

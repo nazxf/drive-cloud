@@ -15,11 +15,11 @@ interface UploadingFile {
 const getFileIcon = (type: string) => {
     if (type.startsWith('image/')) return <Image className="w-4 h-4 text-purple-400" />
     if (type.startsWith('video/')) return <Video className="w-4 h-4 text-orange-400" />
-    if (type.includes('zip') || type.includes('rar') || type.includes('7z')) return <FileArchive className="w-4 h-4 text-yellow-400" />
+    if (type.includes('zip') || type.includes('rar') || type.includes('7z')) return <FileArchive className="w-4 h-4 text-amber-400" />
     if (type.includes('pdf')) return <FileText className="w-4 h-4 text-red-400" />
     if (type.includes('doc') || type.includes('word')) return <FileText className="w-4 h-4 text-blue-400" />
-    if (type.includes('sheet') || type.includes('excel') || type.includes('xls')) return <FileText className="w-4 h-4 text-green-400" />
-    return <FileText className="w-4 h-4 text-slate-400" />
+    if (type.includes('sheet') || type.includes('excel') || type.includes('xls')) return <FileText className="w-4 h-4 text-emerald-400" />
+    return <FileText className="w-4 h-4 text-zinc-400" />
 }
 
 const formatFileSize = (bytes: number) => {
@@ -121,15 +121,15 @@ const UploadModal = ({ onClose }: UploadModalProps) => {
                     animate={{ opacity: 1, scale: 1, y: 0 }}
                     exit={{ opacity: 0, scale: 0.95, y: 20 }}
                     transition={{ duration: 0.2, ease: 'easeOut' }}
-                    className="bg-[var(--bg-card)] border border-white/10 rounded-2xl w-full max-w-lg shadow-2xl"
+                    className="bg-zinc-950 border border-zinc-800/50 rounded-2xl w-full max-w-lg shadow-2xl"
                     onClick={(e) => e.stopPropagation()}
                 >
                     {/* Header */}
-                    <div className="flex items-center justify-between p-5 border-b border-white/5">
-                        <h2 className="text-lg font-semibold text-white">Upload Files</h2>
+                    <div className="flex items-center justify-between p-5 border-b border-zinc-800/50">
+                        <h2 className="text-lg font-medium text-white">Upload Files</h2>
                         <button
                             onClick={onClose}
-                            className="p-1 text-slate-500 hover:text-white hover:bg-white/10 rounded-lg transition-colors"
+                            className="p-1 text-zinc-500 hover:text-white hover:bg-zinc-800 rounded-lg transition-colors"
                         >
                             <X className="w-5 h-5" />
                         </button>
@@ -145,22 +145,22 @@ const UploadModal = ({ onClose }: UploadModalProps) => {
                             className={`
                                 border-2 border-dashed rounded-xl p-8 text-center transition-all duration-200
                                 ${isDragging
-                                    ? 'border-[var(--accent-primary)] bg-[var(--accent-primary)]/5 scale-[1.02]'
-                                    : 'border-white/10 hover:border-white/20'
+                                    ? 'border-emerald-500 bg-emerald-500/5 scale-[1.02]'
+                                    : 'border-zinc-800 hover:border-zinc-700'
                                 }
                             `}
                         >
                             <motion.div
                                 animate={{ y: isDragging ? -5 : 0 }}
-                                className="w-14 h-14 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center mx-auto mb-4"
+                                className="w-14 h-14 rounded-xl bg-zinc-900 border border-zinc-800 flex items-center justify-center mx-auto mb-4"
                             >
-                                <Upload className={`w-7 h-7 transition-colors ${isDragging ? 'text-[var(--accent-primary)]' : 'text-slate-500'}`} />
+                                <Upload className={`w-7 h-7 transition-colors ${isDragging ? 'text-emerald-400' : 'text-zinc-500'}`} />
                             </motion.div>
-                            <p className="text-sm text-slate-400 mb-3">
+                            <p className="text-sm text-zinc-400 mb-3">
                                 {isDragging ? 'Release to upload' : 'Drag and drop files here, or'}
                             </p>
                             {!isDragging && (
-                                <label className="inline-flex items-center gap-2 px-4 py-2 bg-white/5 border border-white/10 rounded-lg text-sm font-medium text-white hover:bg-white/10 transition-colors cursor-pointer">
+                                <label className="inline-flex items-center gap-2 px-4 py-2 bg-zinc-900 border border-zinc-800 rounded-lg text-sm font-medium text-white hover:bg-zinc-800 transition-colors cursor-pointer">
                                     <input
                                         type="file"
                                         multiple
@@ -185,38 +185,38 @@ const UploadModal = ({ onClose }: UploadModalProps) => {
                                         initial={{ opacity: 0, x: -10 }}
                                         animate={{ opacity: 1, x: 0 }}
                                         transition={{ delay: index * 0.05 }}
-                                        className="relative p-3 bg-white/[0.02] border border-white/5 rounded-xl overflow-hidden"
+                                        className="relative p-3 bg-zinc-900/50 border border-zinc-800/50 rounded-xl overflow-hidden"
                                     >
                                         {/* Progress Background */}
                                         <motion.div
-                                            className="absolute inset-0 bg-[var(--accent-primary)]/10"
+                                            className="absolute inset-0 bg-emerald-500/10"
                                             initial={{ width: 0 }}
                                             animate={{ width: `${item.progress}%` }}
                                             transition={{ duration: 0.3 }}
                                         />
 
                                         <div className="relative flex items-center gap-3">
-                                            <div className="p-1.5 rounded-lg bg-white/5 border border-white/5">
+                                            <div className="p-1.5 rounded-lg bg-zinc-800/50">
                                                 {getFileIcon(item.file.type)}
                                             </div>
                                             <div className="flex-1 min-w-0">
                                                 <p className="text-sm text-white truncate">{item.file.name}</p>
                                                 <div className="flex items-center gap-2">
-                                                    <p className="text-xs text-slate-500">
+                                                    <p className="text-xs text-zinc-500">
                                                         {formatFileSize(item.file.size)}
                                                     </p>
                                                     {item.status === 'uploading' && (
-                                                        <span className="text-xs text-[var(--accent-primary)]">{Math.round(item.progress)}%</span>
+                                                        <span className="text-xs text-emerald-400">{Math.round(item.progress)}%</span>
                                                     )}
                                                 </div>
                                             </div>
 
                                             {item.status === 'complete' ? (
-                                                <CheckCircle className="w-5 h-5 text-green-400" />
+                                                <CheckCircle className="w-5 h-5 text-emerald-400" />
                                             ) : (
                                                 <button
                                                     onClick={() => removeFile(index)}
-                                                    className="p-1 text-slate-500 hover:text-white hover:bg-white/10 rounded transition-colors"
+                                                    className="p-1 text-zinc-500 hover:text-white hover:bg-zinc-700 rounded transition-colors"
                                                     disabled={isUploading}
                                                 >
                                                     <X className="w-4 h-4" />
@@ -230,10 +230,10 @@ const UploadModal = ({ onClose }: UploadModalProps) => {
                     </div>
 
                     {/* Footer */}
-                    <div className="flex justify-end gap-3 p-5 border-t border-white/5">
+                    <div className="flex justify-end gap-3 p-5 border-t border-zinc-800/50">
                         <button
                             onClick={onClose}
-                            className="px-4 py-2 text-sm font-medium text-slate-400 hover:text-white transition-colors"
+                            className="px-4 py-2 text-sm font-medium text-zinc-400 hover:text-white transition-colors"
                         >
                             {allComplete ? 'Done' : 'Cancel'}
                         </button>
@@ -241,7 +241,7 @@ const UploadModal = ({ onClose }: UploadModalProps) => {
                             <button
                                 onClick={handleUpload}
                                 disabled={uploadingFiles.length === 0 || isUploading}
-                                className="px-5 py-2 bg-[var(--accent-secondary)] text-black rounded-lg text-sm font-semibold hover:bg-[var(--accent-secondary)]/90 transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2"
+                                className="px-5 py-2 bg-emerald-500 text-black rounded-lg text-sm font-semibold hover:bg-emerald-400 transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2"
                             >
                                 {isUploading ? (
                                     <>

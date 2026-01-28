@@ -8,18 +8,18 @@ interface ButtonProps extends HTMLMotionProps<"button"> {
 
 const Button = forwardRef<HTMLButtonElement, ButtonProps>(
     ({ variant = 'primary', size = 'md', className = '', children, ...props }, ref) => {
-        const baseStyles = 'rounded-xl font-medium transition-all duration-200 cursor-pointer'
+        const baseStyles = 'rounded-lg font-medium transition-all duration-200 cursor-pointer'
 
         const variants = {
-            primary: 'bg-accent hover:bg-accent-light text-primary-950',
-            secondary: 'glass hover:bg-primary-700 text-primary-50',
-            ghost: 'bg-transparent hover:bg-primary-800 text-primary-300',
+            primary: 'bg-emerald-500 hover:bg-emerald-400 text-black',
+            secondary: 'bg-zinc-900 border border-zinc-800 hover:bg-zinc-800 text-white',
+            ghost: 'bg-transparent hover:bg-zinc-800 text-zinc-300',
         }
 
         const sizes = {
-            sm: 'px-4 py-2 text-sm',
-            md: 'px-6 py-3 text-base',
-            lg: 'px-8 py-4 text-lg',
+            sm: 'px-3 py-1.5 text-sm',
+            md: 'px-4 py-2 text-sm',
+            lg: 'px-6 py-3 text-base',
         }
 
         return (

@@ -11,7 +11,7 @@ const DocsLayout = ({ children }: DocsLayoutProps) => {
     const [isSidebarOpen, setIsSidebarOpen] = useState(false)
 
     return (
-        <div className="min-h-screen bg-[var(--bg-deep)] text-zinc-400 font-sans selection:bg-white/10 selection:text-white">
+        <div className="min-h-screen bg-[#0a0a0a] text-zinc-400 font-sans selection:bg-emerald-500/20 selection:text-white">
 
             <DocsMobileHeader onOpenSidebar={() => setIsSidebarOpen(true)} />
 
@@ -28,7 +28,7 @@ const DocsLayout = ({ children }: DocsLayoutProps) => {
                         <div className="min-w-0 space-y-10">
                             {children}
 
-                            <div className="pt-10 mt-16 border-t border-white/5 text-sm text-zinc-500">
+                            <div className="pt-10 mt-16 border-t border-zinc-800/50 text-sm text-zinc-500">
                                 Last updated on Jan 27, 2026
                             </div>
                         </div>
