@@ -2,8 +2,8 @@ import { Link } from 'react-router-dom'
 import { useEffect, useRef } from 'react'
 import { animate, createScope, stagger } from 'animejs'
 import { motion } from 'framer-motion'
-import { ArrowRight, Check, Shield, Zap, Cloud, Lock, Globe, Sparkles, Star, Plus } from 'lucide-react'
-import PremiumFeatureCards from '../components/PremiumFeatureCards'
+import { ArrowRight, Check, Star, Plus } from 'lucide-react'
+import BentoFeatureGrid from '../components/BentoFeatureGrid'
 
 const Landing = () => {
     const containerRef = useRef<HTMLDivElement>(null)
@@ -126,39 +126,6 @@ const Landing = () => {
         };
 
     }, [])
-
-    const features = [
-        {
-            icon: Shield,
-            title: 'End-to-end encryption',
-            description: 'Your files are encrypted before they leave your device.',
-        },
-        {
-            icon: Zap,
-            title: 'Lightning fast',
-            description: 'Optimized for speed with global CDN distribution.',
-        },
-        {
-            icon: Cloud,
-            title: 'Unlimited storage',
-            description: 'Scale your storage as your needs grow.',
-        },
-        {
-            icon: Lock,
-            title: 'Zero-knowledge',
-            description: 'We can never access your files. Only you hold the keys.',
-        },
-        {
-            icon: Globe,
-            title: 'Global access',
-            description: 'Access your files from anywhere in the world.',
-        },
-        {
-            icon: Sparkles,
-            title: 'AI-powered',
-            description: 'Smart organization and search powered by AI.',
-        },
-    ]
 
     return (
         <div ref={containerRef} className="min-h-screen bg-black text-white font-sans antialiased relative overflow-hidden">
@@ -299,38 +266,8 @@ const Landing = () => {
             </section>
 
             {/* Premium Feature Cards - Supabase Style */}
-            <PremiumFeatureCards />
+            <BentoFeatureGrid />
 
-            {/* Features Section */}
-            <section id="features" className="border-t border-zinc-900 py-24">
-                <div className="max-w-6xl mx-auto px-6">
-                    <div className="max-w-2xl mb-16">
-                        <h2 className="text-3xl font-semibold tracking-tight mb-4">
-                            Everything you need
-                        </h2>
-                        <p className="text-zinc-400 text-lg">
-                            Built with security and performance in mind. No compromises.
-                        </p>
-                    </div>
-
-                    <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-                        {features.map((feature, index) => (
-                            <div
-                                key={index}
-                                className="feature-card group p-6 rounded-xl border border-zinc-900 hover:border-zinc-800 bg-zinc-950/50 transition-colors opacity-0 translate-y-[50px]"
-                                onMouseEnter={(e) => handleHover(e.currentTarget, 1.02)}
-                                onMouseLeave={(e) => handleHover(e.currentTarget, 1)}
-                            >
-                                <div className="w-10 h-10 rounded-lg bg-zinc-900 border border-zinc-800 flex items-center justify-center mb-4 group-hover:bg-zinc-800 transition-colors">
-                                    <feature.icon className="w-5 h-5 text-zinc-400" />
-                                </div>
-                                <h3 className="font-medium text-white mb-2">{feature.title}</h3>
-                                <p className="text-sm text-zinc-500 leading-relaxed">{feature.description}</p>
-                            </div>
-                        ))}
-                    </div>
-                </div>
-            </section>
 
             {/* Testimonials */}
             <section className="border-t border-zinc-900 py-24 bg-zinc-950/30">
