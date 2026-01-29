@@ -134,39 +134,179 @@ export const CloudDatabaseIllustration = () => (
     </div>
 );
 
-export const AuthIllustration = () => (
-    <div className="relative w-full h-full overflow-hidden">
-        {/* Content shifted left to create cut-off effect on both sides */}
-        <div
-            className="absolute inset-0 flex flex-col justify-center gap-4 py-4"
-            style={{ left: '-15px', right: '-40px' }}
-        >
-            {/* User Row 1 */}
-            <div className="flex items-stretch gap-8">
-                {/* Email - partially cut on left */}
-                <div className="bg-zinc-900/70 rounded-lg px-5 py-4 border border-zinc-800/60 flex-shrink-0">
-                    <span className="text-[12px] text-zinc-400 font-mono whitespace-nowrap">s160198@gmail.com</span>
-                </div>
-                {/* Username - partially cut on right */}
-                <div className="bg-zinc-900/70 rounded-lg px-5 py-4 border border-zinc-800/60 flex-shrink-0">
-                    <span className="text-[12px] text-zinc-300 font-mono whitespace-nowrap">alex160198</span>
-                </div>
+export const AuthIllustration = () => {
+    // Row data for the security table
+    const rows = [
+        { id: 1, user: 'alex_dev', data: 'user_profile', access: true, delay: 0 },
+        { id: 2, user: 'guest_123', data: 'private_docs', access: false, delay: 0.2 },
+        { id: 3, user: 'admin', data: 'all_records', access: true, delay: 0.4 },
+        { id: 4, user: 'visitor', data: 'payments', access: false, delay: 0.6 },
+    ];
+
+    return (
+        <div className="relative w-full h-full p-4 overflow-hidden">
+            {/* Subtle gradient overlay */}
+            <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-zinc-950/80 pointer-events-none z-10" />
+
+            {/* Decorative glow */}
+            <div className="absolute -top-10 -right-10 w-32 h-32 bg-emerald-500/5 rounded-full blur-2xl" />
+            <div className="absolute -bottom-10 -left-10 w-24 h-24 bg-red-500/5 rounded-full blur-2xl" />
+
+            {/* Table Header */}
+            <div className="flex items-center gap-3 mb-3 px-3 pb-2 border-b border-zinc-800/30">
+                <span className="text-[10px] text-zinc-500 font-medium tracking-wider uppercase w-20">User</span>
+                <span className="text-[10px] text-zinc-500 font-medium tracking-wider uppercase flex-1">Resource</span>
+                <span className="text-[10px] text-zinc-500 font-medium tracking-wider uppercase w-12 text-center">Access</span>
             </div>
 
-            {/* User Row 2 */}
-            <div className="flex items-stretch gap-8">
-                {/* Email - partially cut on left */}
-                <div className="bg-zinc-900/70 rounded-lg px-5 py-4 border border-zinc-800/60 flex-shrink-0">
-                    <span className="text-[12px] text-zinc-400 font-mono whitespace-nowrap">x234567@gmail.com</span>
-                </div>
-                {/* Username - partially cut on right */}
-                <div className="bg-zinc-900/70 rounded-lg px-5 py-4 border border-zinc-800/60 flex-shrink-0">
-                    <span className="text-[12px] text-zinc-300 font-mono whitespace-nowrap">mememaster000</span>
-                </div>
+            {/* Table Rows */}
+            <div className="flex flex-col gap-2 relative">
+                {rows.map((row) => (
+                    <div
+                        key={row.id}
+                        className={`
+                            flex items-center gap-3 rounded-lg px-3 py-2.5 
+                            backdrop-blur-sm transition-all duration-500
+                            ${row.access
+                                ? 'bg-emerald-500/5 border border-emerald-500/20 hover:border-emerald-500/40'
+                                : 'bg-red-500/5 border border-red-500/10 hover:border-red-500/30'
+                            }
+                        `}
+                        style={{
+                            animation: `slideInFade 0.5s ease-out ${row.delay}s both, rowGlow 4s ease-in-out ${row.delay + 1}s infinite`,
+                        }}
+                    >
+                        {/* User avatar + name */}
+                        <div className="flex items-center gap-2 w-20">
+                            <div className={`
+                                w-5 h-5 rounded-full flex items-center justify-center text-[8px] font-bold
+                                ${row.access
+                                    ? 'bg-emerald-500/20 text-emerald-400'
+                                    : 'bg-zinc-700/50 text-zinc-400'
+                                }
+                            `}>
+                                {row.user.charAt(0).toUpperCase()}
+                            </div>
+                            <span className="text-[11px] text-zinc-300 font-mono truncate">
+                                {row.user}
+                            </span>
+                        </div>
+
+                        {/* Data field with icon */}
+                        <div className="flex items-center gap-1.5 flex-1">
+                            <svg className="w-3 h-3 text-zinc-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                                <path d="M4 22h14a2 2 0 0 0 2-2V7l-5-5H6a2 2 0 0 0-2 2v4" />
+                                <path d="M14 2v5h5" />
+                                <path d="M3 15h6" />
+                                <path d="M6 12v6" />
+                            </svg>
+                            <span className="text-[11px] text-zinc-400 font-mono truncate">
+                                {row.data}
+                            </span>
+                        </div>
+
+                        {/* Lock/Unlock Icon with glow */}
+                        <div className="w-12 flex justify-center">
+                            <div
+                                className={`
+                                    relative p-1.5 rounded-md transition-all duration-300
+                                    ${row.access
+                                        ? 'bg-emerald-500/10'
+                                        : 'bg-red-500/10'
+                                    }
+                                `}
+                                style={{
+                                    animation: row.access
+                                        ? `unlockPulse 3s ease-in-out ${row.delay}s infinite`
+                                        : `lockPulse 3s ease-in-out ${row.delay}s infinite`,
+                                }}
+                            >
+                                {/* Glow effect */}
+                                <div
+                                    className={`
+                                        absolute inset-0 rounded-md blur-sm
+                                        ${row.access ? 'bg-emerald-400/20' : 'bg-red-400/10'}
+                                    `}
+                                    style={{
+                                        animation: `glowPulse 2s ease-in-out ${row.delay}s infinite`,
+                                    }}
+                                />
+
+                                {row.access ? (
+                                    <svg
+                                        className="w-4 h-4 text-emerald-400 relative z-10"
+                                        viewBox="0 0 24 24"
+                                        fill="none"
+                                        stroke="currentColor"
+                                        strokeWidth="2.5"
+                                        strokeLinecap="round"
+                                        strokeLinejoin="round"
+                                    >
+                                        <rect x="3" y="11" width="18" height="11" rx="2" ry="2" />
+                                        <path d="M7 11V7a5 5 0 0 1 9.9-1" />
+                                    </svg>
+                                ) : (
+                                    <svg
+                                        className="w-4 h-4 text-red-400/80 relative z-10"
+                                        style={{
+                                            animation: `lockShake 4s ease-in-out ${row.delay + 1}s infinite`,
+                                        }}
+                                        viewBox="0 0 24 24"
+                                        fill="none"
+                                        stroke="currentColor"
+                                        strokeWidth="2.5"
+                                        strokeLinecap="round"
+                                        strokeLinejoin="round"
+                                    >
+                                        <rect x="3" y="11" width="18" height="11" rx="2" ry="2" />
+                                        <path d="M7 11V7a5 5 0 0 1 10 0v4" />
+                                    </svg>
+                                )}
+                            </div>
+                        </div>
+                    </div>
+                ))}
             </div>
+
+            {/* CSS Animations */}
+            <style>{`
+                @keyframes slideInFade {
+                    from {
+                        opacity: 0;
+                        transform: translateX(-10px);
+                    }
+                    to {
+                        opacity: 1;
+                        transform: translateX(0);
+                    }
+                }
+                @keyframes rowGlow {
+                    0%, 100% { opacity: 0.85; }
+                    50% { opacity: 1; }
+                }
+                @keyframes unlockPulse {
+                    0%, 100% { transform: scale(1); }
+                    50% { transform: scale(1.05); }
+                }
+                @keyframes lockPulse {
+                    0%, 100% { transform: scale(1); }
+                    50% { transform: scale(0.95); }
+                }
+                @keyframes glowPulse {
+                    0%, 100% { opacity: 0.3; }
+                    50% { opacity: 0.6; }
+                }
+                @keyframes lockShake {
+                    0%, 100% { transform: rotate(0deg); }
+                    5% { transform: rotate(-3deg); }
+                    10% { transform: rotate(3deg); }
+                    15% { transform: rotate(-3deg); }
+                    20% { transform: rotate(0deg); }
+                }
+            `}</style>
         </div>
-    </div>
-);
+    );
+};
 
 export const EdgeFunctionIllustration = () => (
     <div className="relative w-full h-full p-4 flex flex-col">
