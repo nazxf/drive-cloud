@@ -1,4 +1,4 @@
-
+import React from 'react';
 
 export const CloudDatabaseIllustration = () => (
     <div className="w-full h-full flex items-center justify-center p-2">
@@ -135,13 +135,20 @@ export const CloudDatabaseIllustration = () => (
 );
 
 export const AuthIllustration = () => {
-    // Row data for the security table
-    const rows = [
-        { id: 1, user: 'alex_dev', data: 'user_profile', access: true, delay: 0 },
-        { id: 2, user: 'guest_123', data: 'private_docs', access: false, delay: 0.2 },
-        { id: 3, user: 'admin', data: 'all_records', access: true, delay: 0.4 },
-        { id: 4, user: 'visitor', data: 'payments', access: false, delay: 0.6 },
-    ];
+    const [rows, setRows] = React.useState([
+        { id: 1, user: 'alex_dev', data: 'user_profile', access: true },
+        { id: 2, user: 'guest_123', data: 'private_docs', access: false },
+        { id: 3, user: 'admin', data: 'all_records', access: true },
+        { id: 4, user: 'visitor', data: 'payments', access: false },
+    ]);
+
+    const [hoveredRow, setHoveredRow] = React.useState<number | null>(null);
+
+    const toggleAccess = (id: number) => {
+        setRows(prev => prev.map(row =>
+            row.id === id ? { ...row, access: !row.access } : row
+        ));
+    };
 
     return (
         <div className="relative w-full h-full p-4 overflow-hidden">
@@ -161,29 +168,39 @@ export const AuthIllustration = () => {
 
             {/* Table Rows */}
             <div className="flex flex-col gap-2 relative">
-                {rows.map((row) => (
+                {rows.map((row, index) => (
                     <div
                         key={row.id}
+                        onClick={() => toggleAccess(row.id)}
+                        onMouseEnter={() => setHoveredRow(row.id)}
+                        onMouseLeave={() => setHoveredRow(null)}
                         className={`
                             flex items-center gap-3 rounded-lg px-3 py-2.5 
-                            backdrop-blur-sm transition-all duration-500
+                            backdrop-blur-sm cursor-pointer select-none
+                            transition-all duration-300 ease-out
                             ${row.access
-                                ? 'bg-emerald-500/5 border border-emerald-500/20 hover:border-emerald-500/40'
-                                : 'bg-red-500/5 border border-red-500/10 hover:border-red-500/30'
+                                ? 'bg-emerald-500/5 border border-emerald-500/20'
+                                : 'bg-red-500/5 border border-red-500/10'
+                            }
+                            ${hoveredRow === row.id
+                                ? 'scale-[1.02] shadow-lg ' + (row.access ? 'border-emerald-500/50 shadow-emerald-500/10' : 'border-red-500/40 shadow-red-500/10')
+                                : ''
                             }
                         `}
                         style={{
-                            animation: `slideInFade 0.5s ease-out ${row.delay}s both, rowGlow 4s ease-in-out ${row.delay + 1}s infinite`,
+                            animation: `slideInFade 0.4s ease-out ${index * 0.1}s both`,
                         }}
                     >
                         {/* User avatar + name */}
                         <div className="flex items-center gap-2 w-20">
                             <div className={`
                                 w-5 h-5 rounded-full flex items-center justify-center text-[8px] font-bold
+                                transition-all duration-300
                                 ${row.access
                                     ? 'bg-emerald-500/20 text-emerald-400'
                                     : 'bg-zinc-700/50 text-zinc-400'
                                 }
+                                ${hoveredRow === row.id ? 'scale-110' : ''}
                             `}>
                                 {row.user.charAt(0).toUpperCase()}
                             </div>
@@ -210,31 +227,22 @@ export const AuthIllustration = () => {
                             <div
                                 className={`
                                     relative p-1.5 rounded-md transition-all duration-300
-                                    ${row.access
-                                        ? 'bg-emerald-500/10'
-                                        : 'bg-red-500/10'
-                                    }
+                                    ${row.access ? 'bg-emerald-500/10' : 'bg-red-500/10'}
+                                    ${hoveredRow === row.id ? 'scale-125' : ''}
                                 `}
-                                style={{
-                                    animation: row.access
-                                        ? `unlockPulse 3s ease-in-out ${row.delay}s infinite`
-                                        : `lockPulse 3s ease-in-out ${row.delay}s infinite`,
-                                }}
                             >
                                 {/* Glow effect */}
                                 <div
                                     className={`
-                                        absolute inset-0 rounded-md blur-sm
-                                        ${row.access ? 'bg-emerald-400/20' : 'bg-red-400/10'}
+                                        absolute inset-0 rounded-md blur-sm transition-opacity duration-300
+                                        ${row.access ? 'bg-emerald-400/30' : 'bg-red-400/20'}
+                                        ${hoveredRow === row.id ? 'opacity-100' : 'opacity-40'}
                                     `}
-                                    style={{
-                                        animation: `glowPulse 2s ease-in-out ${row.delay}s infinite`,
-                                    }}
                                 />
 
                                 {row.access ? (
                                     <svg
-                                        className="w-4 h-4 text-emerald-400 relative z-10"
+                                        className={`w-4 h-4 text-emerald-400 relative z-10 transition-transform duration-300 ${hoveredRow === row.id ? 'rotate-12' : ''}`}
                                         viewBox="0 0 24 24"
                                         fill="none"
                                         stroke="currentColor"
@@ -247,10 +255,7 @@ export const AuthIllustration = () => {
                                     </svg>
                                 ) : (
                                     <svg
-                                        className="w-4 h-4 text-red-400/80 relative z-10"
-                                        style={{
-                                            animation: `lockShake 4s ease-in-out ${row.delay + 1}s infinite`,
-                                        }}
+                                        className={`w-4 h-4 text-red-400/80 relative z-10 transition-transform duration-300 ${hoveredRow === row.id ? 'animate-shake' : ''}`}
                                         viewBox="0 0 24 24"
                                         fill="none"
                                         stroke="currentColor"
@@ -264,8 +269,29 @@ export const AuthIllustration = () => {
                                 )}
                             </div>
                         </div>
+
+                        {/* Hover tooltip */}
+                        {hoveredRow === row.id && (
+                            <div
+                                className={`
+                                    absolute right-2 -top-8 px-2 py-1 rounded text-[9px] font-medium
+                                    whitespace-nowrap z-20 animate-fadeIn
+                                    ${row.access
+                                        ? 'bg-emerald-500/20 text-emerald-300 border border-emerald-500/30'
+                                        : 'bg-red-500/20 text-red-300 border border-red-500/30'
+                                    }
+                                `}
+                            >
+                                Click to {row.access ? 'revoke' : 'grant'} access
+                            </div>
+                        )}
                     </div>
                 ))}
+            </div>
+
+            {/* Hint text */}
+            <div className="absolute bottom-1 left-0 right-0 text-center">
+                <span className="text-[9px] text-zinc-600 italic">Click rows to toggle access</span>
             </div>
 
             {/* CSS Animations */}
@@ -280,28 +306,20 @@ export const AuthIllustration = () => {
                         transform: translateX(0);
                     }
                 }
-                @keyframes rowGlow {
-                    0%, 100% { opacity: 0.85; }
-                    50% { opacity: 1; }
+                @keyframes fadeIn {
+                    from { opacity: 0; transform: translateY(4px); }
+                    to { opacity: 1; transform: translateY(0); }
                 }
-                @keyframes unlockPulse {
-                    0%, 100% { transform: scale(1); }
-                    50% { transform: scale(1.05); }
-                }
-                @keyframes lockPulse {
-                    0%, 100% { transform: scale(1); }
-                    50% { transform: scale(0.95); }
-                }
-                @keyframes glowPulse {
-                    0%, 100% { opacity: 0.3; }
-                    50% { opacity: 0.6; }
-                }
-                @keyframes lockShake {
+                @keyframes shake {
                     0%, 100% { transform: rotate(0deg); }
-                    5% { transform: rotate(-3deg); }
-                    10% { transform: rotate(3deg); }
-                    15% { transform: rotate(-3deg); }
-                    20% { transform: rotate(0deg); }
+                    25% { transform: rotate(-8deg); }
+                    75% { transform: rotate(8deg); }
+                }
+                .animate-fadeIn {
+                    animation: fadeIn 0.2s ease-out forwards;
+                }
+                .animate-shake {
+                    animation: shake 0.3s ease-in-out;
                 }
             `}</style>
         </div>
@@ -309,30 +327,39 @@ export const AuthIllustration = () => {
 };
 
 export const EdgeFunctionIllustration = () => (
-    <div className="relative w-full h-full p-4 flex flex-col">
-        <div className="mb-6 bg-zinc-900/80 rounded-lg px-4 py-2.5 border border-emerald-500/40 inline-flex items-center gap-2 self-start">
-            <span className="text-emerald-400 text-xs font-bold">$</span>
-            <span className="text-xs text-zinc-200 font-mono">teracloud functions deploy</span>
+    <div className="w-full h-full flex items-center justify-center p-6 relative group cursor-default">
+        {/* Glow effect for the whole card */}
+        <div className="absolute inset-0 bg-emerald-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-700 blur-3xl pointer-events-none" />
+
+        <div className="flex gap-4 w-full h-full justify-center items-center max-w-[340px]">
+            {/* Horizontal NVMe SSD Image Card */}
+            <div className="relative w-full aspect-[16/10] rounded-[24px] bg-[#0c0c0c] border border-white/5 flex flex-col items-center justify-center overflow-hidden transition-all duration-500 hover:border-emerald-500/20 shadow-2xl shadow-black/40 group-hover:scale-[1.02]">
+
+                {/* Image Container */}
+                <div className="absolute inset-0">
+                    <img
+                        src="/nvme-ssd-h.webp"
+                        alt="Cinematic NVMe SSD"
+                        className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105 opacity-90"
+                    />
+                    {/* Dark gradient overlay for text readability */}
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent" />
+                </div>
+
+                {/* Content Overlay - Integrated Pill */}
+                <div className="absolute bottom-4 left-4 right-4 flex items-center justify-between">
+                    <div className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-black/40 backdrop-blur-md border border-white/10 shadow-lg">
+                        <div className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse shadow-[0_0_8px_rgba(16,185,129,0.8)]" />
+                        <span className="text-[10px] uppercase tracking-wider text-white/80 font-semibold font-mono">NVMe Active</span>
+                    </div>
+
+                    <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-black/40 backdrop-blur-md border border-white/10 shadow-lg">
+                        <span className="text-sm font-bold text-white font-sans tracking-tight">5</span>
+                        <span className="text-[10px] uppercase tracking-wider text-emerald-400 font-bold font-mono">GB/s</span>
+                    </div>
+                </div>
+            </div>
         </div>
-
-        <svg viewBox="0 0 180 80" className="w-full flex-1">
-            <g stroke="#10b981" strokeWidth="1" opacity="0.5">
-                <line x1="90" y1="15" x2="40" y2="45" />
-                <line x1="90" y1="15" x2="90" y2="55" />
-                <line x1="90" y1="15" x2="140" y2="45" />
-                <line x1="40" y1="45" x2="90" y2="55" />
-                <line x1="140" y1="45" x2="90" y2="55" />
-                <line x1="40" y1="45" x2="140" y2="45" strokeDasharray="3,3" />
-            </g>
-
-            <circle cx="90" cy="15" r="5" fill="#10b981" />
-            <circle cx="40" cy="45" r="4" fill="#10b981" opacity="0.7" />
-            <circle cx="90" cy="55" r="4" fill="#10b981" opacity="0.7" />
-            <circle cx="140" cy="45" r="4" fill="#10b981" opacity="0.7" />
-
-            <circle cx="20" cy="65" r="2" fill="#10b981" opacity="0.3" />
-            <circle cx="160" cy="65" r="2" fill="#10b981" opacity="0.3" />
-        </svg>
     </div>
 );
 

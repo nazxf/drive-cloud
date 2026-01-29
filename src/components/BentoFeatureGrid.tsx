@@ -18,7 +18,7 @@ import {
 
 export const BentoFeatureGrid = () => {
     return (
-        <section className="w-full py-24 px-4 bg-[#0a0a0a] relative overflow-hidden">
+        <section className="w-full py-24 px-4 bg-black relative overflow-hidden">
             {/* Subtle background gradient */}
             <div className="absolute inset-0 opacity-20 pointer-events-none">
                 <div className="absolute top-1/4 left-1/3 w-[500px] h-[500px] bg-emerald-500/10 rounded-full blur-[120px]" />
@@ -76,13 +76,13 @@ export const BentoFeatureGrid = () => {
                         illustration={<AuthIllustration />}
                     />
 
-                    {/* Edge Functions */}
+                    {/* Server Performance */}
                     <FeatureCard
                         icon={<Zap className="w-5 h-5" />}
-                        title="Edge Functions"
+                        title="High Performance"
                         description={
                             <span>
-                                Easily write custom code <span className="text-white font-medium">without deploying</span> or scaling servers.
+                                Powered by <span className="text-emerald-400 font-medium">NVMe SSD</span> and high-performance <span className="text-cyan-400 font-medium">CPU</span> for blazing speed.
                             </span>
                         }
                         illustration={<EdgeFunctionIllustration />}
